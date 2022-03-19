@@ -41,6 +41,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'apps/users',
+    'apps/products',
 ]
 
 MIDDLEWARE = [
@@ -79,10 +82,11 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'djongo', #'django.db.backends.sqlite3',
+        'NAME':'pantrydb', # BASE_DIR / 'db.sqlite3',
     }
 }
+
 
 
 # Password validation
