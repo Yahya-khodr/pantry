@@ -10,9 +10,9 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
+
 import os
 from pathlib import Path
-
 from dotenv import load_dotenv
 load_dotenv()  # loads the configs from .env
 
@@ -42,8 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'apps/users',
-    'apps/products',
+   
+
 ]
 
 MIDDLEWARE = [
@@ -82,11 +82,11 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'djongo', #'django.db.backends.sqlite3',
-        'NAME':str(os.getenv('DB_NAME')), # BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'djongo',  # 'django.db.backends.sqlite3',
+        # str(os.getenv('DB_NAME')), # BASE_DIR / 'db.sqlite3',
+        'NAME': 'pantrydb'
     }
 }
-
 
 
 # Password validation
