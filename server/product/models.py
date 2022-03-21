@@ -16,7 +16,7 @@ class ProductModel(models.Model):
     product_name = models.TextField()
     product_quantity = models.TextField()
     product_image = models.ImageField(null= True, blank = True)
-    category = models.ForeignKey(CategoryModel, models.CASCADE)
+    category = models.ForeignKey(CategoryModel, models.CASCADE, null=True, blank=True,)
 
     def __str__(self):
         return self.product_name
