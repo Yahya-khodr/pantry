@@ -1,5 +1,7 @@
+
+
 import 'package:flutter/material.dart';
-import 'package:frontend/views/screens/home_screen.dart';
+import 'package:frontend/resources/palette.dart';
 import 'package:frontend/views/screens/main_screen.dart';
 
 void main() {
@@ -15,8 +17,8 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+          primarySwatch: Colors.blue,
+          scaffoldBackgroundColor: Palette.backgroundColor),
       home: const MainScreen(),
     );
   }
