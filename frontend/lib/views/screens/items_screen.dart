@@ -25,6 +25,9 @@ class ItemsScreen extends StatelessWidget {
                   CardItem(),
                   CardItem(),
                   CardItem(),
+                  CardItem(),
+                  CardItem(),
+                  CardItem(),
                 ],
               )),
           const SizedBox(height: 15.0)

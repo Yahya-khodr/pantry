@@ -1,7 +1,6 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:frontend/resources/palette.dart';
+import 'package:frontend/views/screens/auth_screens/auth_screen.dart';
 import 'package:frontend/views/screens/main_screen.dart';
 
 void main() {
@@ -19,7 +18,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
           primarySwatch: Colors.blue,
           scaffoldBackgroundColor: Palette.backgroundColor),
-      home: const MainScreen(),
+      home: const Authentication(),
     );
   }
 }

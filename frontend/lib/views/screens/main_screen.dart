@@ -5,6 +5,7 @@ import 'package:frontend/views/screens/home_screen.dart';
 import 'package:frontend/views/screens/items_screen.dart';
 import 'package:frontend/views/screens/profile_screen.dart';
 import 'package:frontend/views/screens/shop_screen.dart';
+import 'package:frontend/views/widgets/custom_appbar_widget.dart';
 import 'package:frontend/views/widgets/tabbar_material_widget.dart';
 
 import '../../resources/palette.dart';
@@ -27,68 +28,20 @@ class _MainScreenState extends State<MainScreen> {
   ];
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 5,
-      child: Scaffold(
-        // backgroundColor: Palette.backgroundColor,
-        appBar: AppBar(
-          title: Text(Constants.appName),
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.search),
-              onPressed: () {},
-            ),
-            IconButton(
-              icon: const Icon(Icons.notifications_none),
-              onPressed: () {},
-            ),
-            IconButton(
-              icon: const Icon(Icons.more_vert),
-              onPressed: () {},
-            ),
-          ],
-          //backgroundColor: Colors.purple,
-          flexibleSpace: Container(
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                colors: [Palette.appBarColor, Palette.appBarColorLinear],
-                end: Alignment.topCenter,
-                begin: Alignment.bottomCenter,
-              ),
-            ),
-          ),
-          // bottom: const TabBar(
-          //   isScrollable: true,
-          //   indicatorColor: Colors.white,
-          //   indicatorWeight: 4,
-
-          //   tabs: [
-          //     Tab(
-          //       child: Text(
-          //         "Home",
-          //         style: TextStyle(fontSize: 20),
-          //       ),
-          //     ),
-          //     Tab(text: 'Home'),
-          //     Tab(text: 'Home'),
-          //     Tab(text: 'Home'),
-          //     Tab(text: 'Home'),
-          //   ],
-          // ),
-        ),
-        extendBody: true,
-        body: screens[index],
-        bottomNavigationBar: TabBarMaterialWidget(
-          index: index,
-          onChangedTab: onChangedTab,
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {},
-          backgroundColor: Palette.appBarColor,
-          child: const FaIcon(FontAwesomeIcons.barcode),
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+   
+    return Scaffold(
+      extendBody: true,
+      body: screens[index],
+      bottomNavigationBar: TabBarMaterialWidget(
+        index: index,
+        onChangedTab: onChangedTab,
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        backgroundColor: Palette.appBarColor,
+        child: const FaIcon(FontAwesomeIcons.barcode),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 
@@ -98,3 +51,59 @@ class _MainScreenState extends State<MainScreen> {
     });
   }
 }
+
+// class MyAppbar extends StatelessWidget {
+//   const MyAppbar({
+//     Key? key,
+//   }) : super(key: key);
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return AppBar(
+//       title: Text(Constants.appName),
+//       actions: [
+//         IconButton(
+//           icon: const Icon(Icons.search),
+//           onPressed: () {},
+//         ),
+//         IconButton(
+//           icon: const Icon(Icons.notifications_none),
+//           onPressed: () {},
+//         ),
+//         IconButton(
+//           icon: const Icon(Icons.more_vert),
+//           onPressed: () {},
+//         ),
+//       ],
+//       //backgroundColor: Colors.purple,
+//       flexibleSpace: Container(
+//         decoration: const BoxDecoration(
+//           gradient: LinearGradient(
+//             colors: [Palette.appBarColor, Palette.appBarColorLinear],
+//             end: Alignment.topCenter,
+//             begin: Alignment.bottomCenter,
+//           ),
+//         ),
+//       ),
+//       // bottom: const TabBar(
+//       //   isScrollable: true,
+//       //   indicatorColor: Colors.white,
+//       //   indicatorWeight: 4,
+
+//       //   tabs: [
+//       //     Tab(
+//       //       child: Text(
+//       //         "Home",
+//       //         style: TextStyle(fontSize: 20),
+//       //       ),
+//       //     ),
+//       //     Tab(text: 'Home'),
+//       //     Tab(text: 'Home'),
+//       //     Tab(text: 'Home'),
+//       //     Tab(text: 'Home'),
+//       //   ],
+//       // ),
+//     );
+//   }
+// }
+

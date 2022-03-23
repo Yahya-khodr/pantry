@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/resources/constants.dart';
 import 'package:frontend/views/widgets/category_widget.dart';
+import 'package:frontend/views/widgets/custom_appbar_widget.dart';
 import 'package:frontend/views/widgets/slider_item.dart';
 
 import '../../utils/categories.dart';
@@ -14,7 +16,14 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(size.height * 0.1),
+        child: CustomAppBar(
+          title: Constants.appName,
+        ),
+      ),
       body: ListView(
         children: [
           Padding(
