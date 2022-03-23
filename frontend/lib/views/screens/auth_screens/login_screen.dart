@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/views/screens/main_screen.dart';
 import 'package:frontend/views/widgets/rounded_button_widget.dart';
 import 'package:frontend/views/widgets/text_field_widget.dart';
 
@@ -33,7 +34,14 @@ class _LoginScreenState extends State<LoginScreen> {
             SizedBox(
               height: size.height * 0.03,
             ),
-            RoundedButton(text: "Login", onPressed: () {})
+            RoundedButton(
+              text: "Login",
+              onPressed: () => Navigator.of(context).pushReplacement(
+                MaterialPageRoute(
+                  builder: (context) => const MainScreen(),
+                ),
+              ),
+            ),
           ],
         ),
       ),
