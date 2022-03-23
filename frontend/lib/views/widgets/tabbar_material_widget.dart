@@ -24,6 +24,7 @@ class _TabBarMaterialWidgetState extends State<TabBarMaterialWidget> {
     );
 
     return BottomAppBar(
+      notchMargin: 6,
       shape: const CircularNotchedRectangle(),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
