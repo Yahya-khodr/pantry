@@ -5,20 +5,25 @@ class HomeCard extends StatelessWidget {
   final String title;
   final String date;
   final String qty;
-  const HomeCard(
-      {Key? key,
-      required this.image,
-      required this.title,
-      required this.date,
-      required this.qty})
-      : super(key: key);
+  final VoidCallback ontap;
+  const HomeCard({
+    Key? key,
+    required this.image,
+    required this.title,
+    required this.date,
+    required this.qty,
+    required this.ontap,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10.0),
+      ),
       elevation: 2.0,
       child: ListTile(
+        onTap: ontap,
         leading: CircleAvatar(
           backgroundImage: NetworkImage(image),
         ),

@@ -32,7 +32,7 @@ class CardItem extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(16).copyWith(bottom: 0),
               child: const Text(
-                'Product Name Product Name Product Name Product Name Product Name Product Name Product Name  ',
+                'Product Name',
                 style: TextStyle(fontSize: 12),
               ),
             ),

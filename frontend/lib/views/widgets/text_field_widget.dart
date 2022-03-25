@@ -3,9 +3,11 @@ import 'package:frontend/resources/palette.dart';
 
 class CustomTextField extends StatefulWidget {
   final String hintText;
+  final TextEditingController controller;
   const CustomTextField({
     Key? key,
     required this.hintText,
+    required this.controller,
   }) : super(key: key);
 
   @override
@@ -33,6 +35,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
             colorScheme:
                 ThemeData().colorScheme.copyWith(primary: Palette.appBarColor)),
         child: TextField(
+          controller: widget.controller,
           cursorColor: Palette.appBarColor,
           decoration: InputDecoration(
             focusColor: Palette.appBarColor,
@@ -49,7 +52,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
                 borderRadius: BorderRadius.circular(20.0),
                 borderSide:
                     const BorderSide(color: Palette.appBarColor, width: 2.0)),
-            prefixIcon: widget.hintText == "Email"
+            prefixIcon: widget.hintText == "Email" || widget.hintText == "Name"
                 ? const Icon(Icons.email)
                 : const Icon(Icons.lock),
             suffixIcon: widget.hintText == "Password"
