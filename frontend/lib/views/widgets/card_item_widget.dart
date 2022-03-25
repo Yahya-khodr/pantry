@@ -29,6 +29,7 @@ class CardItem extends StatelessWidget {
             ),
           ),
           Expanded(
+            flex: 1,
             child: Padding(
               padding: const EdgeInsets.all(16).copyWith(bottom: 0),
               child: const Text(
@@ -41,26 +42,30 @@ class CardItem extends StatelessWidget {
             child: ButtonBar(
               alignment: MainAxisAlignment.center,
               children: [
-                MaterialButton(
-                  onPressed: () {},
-                  shape: const CircleBorder(
-                    side: BorderSide(color: Colors.green),
-                  ),
-                  child: const Icon(
-                    Icons.add,
-                    color: Colors.green,
-                  ),
-                ),
-                const Text("20"),
-                MaterialButton(
-                  onPressed: () {},
-                  shape: const CircleBorder(
-                    side: BorderSide(color: Colors.green),
-                  ),
-                  child: const Icon(
-                    Icons.remove,
-                    color: Colors.green,
-                  ),
+                Row(
+                  children: [
+                    MaterialButton(
+                      onPressed: () {},
+                      shape: const CircleBorder(
+                        side: BorderSide(color: Colors.green),
+                      ),
+                      child: const Icon(
+                        Icons.add,
+                        color: Colors.green,
+                      ),
+                    ),
+                    const Text("20"),
+                    MaterialButton(
+                      onPressed: () {},
+                      shape: const CircleBorder(
+                        side: BorderSide(color: Colors.green),
+                      ),
+                      child: const Icon(
+                        Icons.remove,
+                        color: Colors.green,
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),

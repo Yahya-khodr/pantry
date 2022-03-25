@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 
-
 class CategoryItem extends StatefulWidget {
   final IconData icon;
   final String title;
 
-  const CategoryItem(
-      { Key? key,
-      required this.icon,
-      required this.title,})
-      : super(key: key);
+  const CategoryItem({
+    Key? key,
+    required this.icon,
+    required this.title,
+  }) : super(key: key);
 
   @override
   _CategoryItemState createState() => _CategoryItemState();
@@ -19,12 +18,11 @@ class _CategoryItemState extends State<CategoryItem> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-              
-            },
+      onTap: () {},
       child: Card(
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
         elevation: 2.0,
         child: Padding(
           padding: const EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
