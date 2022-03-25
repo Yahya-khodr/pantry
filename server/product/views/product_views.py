@@ -41,3 +41,19 @@ def get_product_by_category(request, category):
     return Response(serializer.data)
 
 
+
+
+# @api_view(['POST'])
+# def add_item(request):
+#     data = request.data
+#     user = UserModel.objects.get(id = request.user.id)
+#     product = ProductModel.objects.get(id = data['product_id'])
+
+#     try:
+#         item = ItemModel.objects.get(user=user)
+#         total_item = item.count()
+
+#         if total_item == 0 :
+#             ItemModel.objects.create(
+#                 user = user ,product = product,quantity = 1
+#             )

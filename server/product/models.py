@@ -28,6 +28,7 @@ class ItemModel(models.Model):
     product = models.ForeignKey(ProductModel, models.CASCADE)
     company_name = models.CharField(max_length=255)
     expiry_date = models.DateField()
+    quantity = models.IntegerField(default=0)
     purchased_date = models.DateField()
     created_date = models.DateField(auto_now_add=True)
     update_date = models.DateField(auto_now=True)
