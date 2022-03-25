@@ -37,3 +37,33 @@ class UserService with ChangeNotifier {
     }
   }
 }
+
+
+Future<HTTPResponse<String>> registerUser(
+      String name, String email, String password) async {
+    Uri url = Uri.parse(Constants.registerUrl);
+
+    try {
+      http.Response response = await http.post(
+        url,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: json.encode({"name": name, "email": email, "password": password}),
+      );
+      var data = json.decode(response.body);
+      if (response.statusCode == 200) {
+        return HTTPResponse(true, data['token'], "Registration Successful",
+            response.statusCode);
+      } else {
+        log(response.body);
+        return HTTPResponse(false, "", data['error'], response.statusCode);
+      }
+    } on SocketException {
+      return HTTPResponse(false, "", "No Internet Connection", 400);
+    } on FormatException {
+      return HTTPResponse(false, "", "Invalid Response", 400);
+    } catch (e) {
+      return HTTPResponse(false, "", "Error Occurred", 400);
+    }
+  }
