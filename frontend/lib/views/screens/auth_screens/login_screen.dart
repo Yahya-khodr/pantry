@@ -24,6 +24,7 @@ class _LoginScreenState extends State<LoginScreen> {
   bool _isloading = false;
   @override
   Widget build(BuildContext context) {
+    
     void _loginUser() {
       if (Validator.isValidEmail(_email) &&
           Validator.isValidPassword(_password)) {
@@ -79,6 +80,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   CustomTextField(
                     hintText: "Email",
                     controller: _emailController,
+                    icon: Icons.email,
                   ),
                   SizedBox(
                     height: size.height * 0.03,
@@ -86,6 +88,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   CustomTextField(
                     hintText: "Password",
                     controller: _passwordController,
+                    icon: Icons.lock,
                   ),
                   SizedBox(
                     height: size.height * 0.03,
