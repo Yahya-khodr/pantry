@@ -18,31 +18,32 @@ class ProfileWidget extends StatelessWidget {
     const color = Palette.appBarColor;
 
     return Center(
-      child: Stack(
-        children: [
-          buildImage(),
-          Positioned(
-            bottom: 0,
-            right: 4,
-            child: buildEditIcon(color),
-          ),
-        ],
+      child: InkWell(
+        onTap: onClicked,
+        child: Stack(
+          children: [
+            buildImage(),
+            Positioned(
+              bottom: 0,
+              right: 4,
+              child: buildEditIcon(color),
+            ),
+          ],
+        ),
       ),
     );
   }
 
   Widget buildImage() {
-    final image = NetworkImage(imagePath);
-
+    final String image = imagePath;
     return ClipOval(
       child: Material(
         color: Colors.transparent,
-        child: Ink.image(
-          image: image,
+        child: Image.asset(
+          image,
           fit: BoxFit.cover,
           width: 128,
           height: 128,
-          child: InkWell(onTap: onClicked),
         ),
       ),
     );
