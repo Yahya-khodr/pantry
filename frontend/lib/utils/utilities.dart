@@ -19,4 +19,29 @@ class Utilities {
       ),
     );
   }
+
+  static showAlertDialog(
+      BuildContext context, String title, String message, bool success) {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(title),
+          content: Text(message),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Ok'),
+              onPressed: () {
+                if (success) {
+                  Navigator.of(context).pop();
+                } else {
+                  Navigator.of(context).pop();
+                }
+              },
+            )
+          ],
+        );
+      },
+    );
+  }
 }
