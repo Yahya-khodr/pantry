@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/resources/constants.dart';
+import 'package:frontend/views/screens/item_detail_screen.dart';
 import 'package:frontend/views/widgets/category_widget.dart';
 import 'package:frontend/views/widgets/custom_appbar_widget.dart';
 import 'package:frontend/views/widgets/home_card_widget.dart';
@@ -116,12 +117,19 @@ class _HomeScreenState extends State<HomeScreen> {
                 shrinkWrap: true,
                 itemCount: 5,
                 itemBuilder: (BuildContext context, int index) {
-                  return const HomeCard(
+                  return HomeCard(
                       image:
                           'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1327&q=80',
                       title: 'Product Name',
                       date: '3 days',
-                      qty: '2L');
+                      qty: '2L',
+                      ontap: () async {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    const ItemDetailScreen()));
+                      });
                 },
               ),
             ),

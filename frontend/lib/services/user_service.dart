@@ -36,10 +36,8 @@ class UserService with ChangeNotifier {
       return HTTPResponse(false, "", "Error Occurred", 400);
     }
   }
-}
 
-
-Future<HTTPResponse<String>> registerUser(
+  Future<HTTPResponse<String>> registerUser(
       String name, String email, String password) async {
     Uri url = Uri.parse(Constants.registerUrl);
 
@@ -67,3 +65,4 @@ Future<HTTPResponse<String>> registerUser(
       return HTTPResponse(false, "", "Error Occurred", 400);
     }
   }
+}
