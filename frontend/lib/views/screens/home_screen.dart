@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend/resources/constants.dart';
 import 'package:frontend/views/widgets/category_widget.dart';
 import 'package:frontend/views/widgets/custom_appbar_widget.dart';
+import 'package:frontend/views/widgets/home_card_widget.dart';
 import 'package:frontend/views/widgets/slider_item.dart';
 
 import '../../utils/categories.dart';
@@ -19,15 +20,15 @@ class _HomeScreenState extends State<HomeScreen> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(size.height * 0.1),
+        preferredSize: const Size.fromHeight(50),
         child: CustomAppBar(
           title: Constants.appName,
         ),
       ),
-      body: ListView(
+      body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+            padding: const EdgeInsets.symmetric(horizontal: 14.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
@@ -60,7 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
             height: 2.5,
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+            padding: const EdgeInsets.symmetric(horizontal: 14.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: const <Widget>[
@@ -88,7 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+            padding: const EdgeInsets.symmetric(horizontal: 14.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
@@ -105,6 +106,25 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           const SizedBox(
             height: 2.5,
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 14.0),
+            child: SizedBox(
+              height: size.height / 3,
+              child: ListView.builder(
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
+                itemCount: 5,
+                itemBuilder: (BuildContext context, int index) {
+                  return const HomeCard(
+                      image:
+                          'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1327&q=80',
+                      title: 'Product Name',
+                      date: '3 days',
+                      qty: '2L');
+                },
+              ),
+            ),
           ),
         ],
       ),
