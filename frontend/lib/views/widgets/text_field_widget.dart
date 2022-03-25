@@ -3,11 +3,13 @@ import 'package:frontend/resources/palette.dart';
 
 class CustomTextField extends StatefulWidget {
   final String hintText;
+  final IconData icon;
   final TextEditingController controller;
   const CustomTextField({
     Key? key,
     required this.hintText,
     required this.controller,
+    required this.icon,
   }) : super(key: key);
 
   @override
@@ -52,10 +54,12 @@ class _CustomTextFieldState extends State<CustomTextField> {
                 borderRadius: BorderRadius.circular(20.0),
                 borderSide:
                     const BorderSide(color: Palette.appBarColor, width: 2.0)),
-            prefixIcon: widget.hintText == "Email" || widget.hintText == "Name"
-                ? const Icon(Icons.email)
-                : const Icon(Icons.lock),
-            suffixIcon: widget.hintText == "Password"
+            prefixIcon: Icon(widget.icon),
+            // prefixIcon: widget.hintText == "Email"
+            //     ? const Icon(Icons.email)
+            //     : const Icon(Icons.lock),
+            suffixIcon: widget.hintText == "Password" ||
+                    widget.hintText == "Confirm Password"
                 ? IconButton(
                     onPressed: _toggleVisibility,
                     icon: _isHidden
@@ -64,7 +68,10 @@ class _CustomTextFieldState extends State<CustomTextField> {
                   )
                 : null,
           ),
-          obscureText: widget.hintText == "Password" ? _isHidden : false,
+          obscureText: widget.hintText == "Password" ||
+                  widget.hintText == "Confirm Password"
+              ? _isHidden
+              : false,
         ),
       ),
     );
