@@ -10,6 +10,13 @@ class ProductViewModel extends ChangeNotifier {
 
   Nutriments? _nutriments;
   Nutriments? get nutriments => _nutriments;
+  bool _loading = false;
+  bool get loading => _loading;
+
+  setLoading(bool loading) async {
+    _loading = loading;
+    notifyListeners();
+  }
 
   setNutriments(Nutriments nutriments) {
     _nutriments = nutriments;
@@ -20,10 +27,12 @@ class ProductViewModel extends ChangeNotifier {
   }
 
   fetchProduct(String barcode) async {
+    setLoading(true);
     var response = await _productService.fetchProduct(barcode);
     if (response.status == 1) {
       setProduct(response.product as Product);
       setNutriments(response.product?.nutriments as Nutriments);
     }
+    setLoading(false);
   }
 }
