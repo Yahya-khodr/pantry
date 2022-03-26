@@ -1,11 +1,13 @@
 
 
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST, HTTP_404_NOT_FOUND
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import authenticate
+
+from api.serializers import user_serializer
 from ..models import *
 from django.utils.text import  slugify
 
@@ -44,7 +46,21 @@ def signup_view(request):
         token, created = Token.objects.get_or_create(user=user)
         user.token = token.key
         user.save()
+        ProfileModel.objects.create(user=user)
         
         return Response({"token": token.key}, status=HTTP_200_OK)
     except:
         return Response({"error": "User already exists"}, status=HTTP_400_BAD_REQUEST)
+
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def profile_view(request):  # profile view
+    user = UserModel.objects.get(id=request.user.id)
+    profile = ProfileModel.objects.get(user=user)
+
+    serialized_user = user_serializer.UserModelSerializer(user, many=False).data
+    serialized_profile = user_serializer.ProfileModelSerializer(profile, many=False).data
+
+    return Response({"user": serialized_user, "profile": serialized_profile}, status=HTTP_200_OK)

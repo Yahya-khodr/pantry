@@ -6,4 +6,7 @@ urlpatterns = [
     # user login, logout and registration url
     path('login/', user_views.login_view),
     path('register/', user_views.signup_view),
+
+    # profile 
+    path('profile/', user_views.profile_view)
 ]
