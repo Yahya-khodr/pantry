@@ -1,4 +1,8 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:frontend/resources/constants.dart';
 import 'package:frontend/views/screens/home_screen.dart';
@@ -20,6 +24,7 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   int index = 0;
 
+  String barcode = 'Unknown';
   final screens = const <Widget>[
     HomeScreen(),
     ShopScreen(),
@@ -28,7 +33,6 @@ class _MainScreenState extends State<MainScreen> {
   ];
   @override
   Widget build(BuildContext context) {
-   
     return Scaffold(
       extendBody: true,
       body: screens[index],
@@ -37,7 +41,10 @@ class _MainScreenState extends State<MainScreen> {
         onChangedTab: onChangedTab,
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: (() {
+          scanBarcode(barcode);
+          
+        }),
         backgroundColor: Palette.appBarColor,
         child: const FaIcon(FontAwesomeIcons.barcode),
       ),
@@ -50,60 +57,22 @@ class _MainScreenState extends State<MainScreen> {
       this.index = index;
     });
   }
+
+  Future<void> scanBarcode(String code) async {
+    try {
+      code = await FlutterBarcodeScanner.scanBarcode(
+        '#ff6666',
+        'Cancel',
+        true,
+        ScanMode.BARCODE,
+      );
+      if (!mounted) return;
+      setState(() {
+        barcode = code;
+        log("barcode:" + barcode);
+      });
+    } on PlatformException {
+      barcode = 'Failed to get platform version';
+    }
+  }
 }
-
-// class MyAppbar extends StatelessWidget {
-//   const MyAppbar({
-//     Key? key,
-//   }) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return AppBar(
-//       title: Text(Constants.appName),
-//       actions: [
-//         IconButton(
-//           icon: const Icon(Icons.search),
-//           onPressed: () {},
-//         ),
-//         IconButton(
-//           icon: const Icon(Icons.notifications_none),
-//           onPressed: () {},
-//         ),
-//         IconButton(
-//           icon: const Icon(Icons.more_vert),
-//           onPressed: () {},
-//         ),
-//       ],
-//       //backgroundColor: Colors.purple,
-//       flexibleSpace: Container(
-//         decoration: const BoxDecoration(
-//           gradient: LinearGradient(
-//             colors: [Palette.appBarColor, Palette.appBarColorLinear],
-//             end: Alignment.topCenter,
-//             begin: Alignment.bottomCenter,
-//           ),
-//         ),
-//       ),
-//       // bottom: const TabBar(
-//       //   isScrollable: true,
-//       //   indicatorColor: Colors.white,
-//       //   indicatorWeight: 4,
-
-//       //   tabs: [
-//       //     Tab(
-//       //       child: Text(
-//       //         "Home",
-//       //         style: TextStyle(fontSize: 20),
-//       //       ),
-//       //     ),
-//       //     Tab(text: 'Home'),
-//       //     Tab(text: 'Home'),
-//       //     Tab(text: 'Home'),
-//       //     Tab(text: 'Home'),
-//       //   ],
-//       // ),
-//     );
-//   }
-// }
-

@@ -22,14 +22,14 @@ class ItemsScreen extends StatelessWidget {
             children: <Widget>[
               const SizedBox(height: 15.0),
               SizedBox(
-                  width: MediaQuery.of(context).size.width - 30.0,
-                  height: MediaQuery.of(context).size.height - 50.0,
+                  width: size.width - 20.0,
+                  height: size.height - 50.0,
                   child: GridView.count(
                     crossAxisCount: 2,
                     primary: false,
                     crossAxisSpacing: 10.0,
-                    mainAxisSpacing: 15.0,
-                    childAspectRatio: 0.8,
+                    mainAxisSpacing: 12.0,
+                    childAspectRatio: 0.7,
                     children: const <Widget>[
                       CardItem(),
                       CardItem(),
@@ -40,7 +40,7 @@ class ItemsScreen extends StatelessWidget {
                       CardItem(),
                     ],
                   )),
-              const SizedBox(height: 15.0)
+              const SizedBox(height: 30.0),
             ],
           ),
         ),
