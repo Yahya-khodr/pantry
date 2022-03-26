@@ -5,4 +5,7 @@ class Constants {
 
   static String loginUrl = api + "login/";
   static String registerUrl = api + "register/";
+
+  static String remoteApi =
+      "https://world.openfoodfacts.org/api/v0/product/";
 }
