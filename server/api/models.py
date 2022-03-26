@@ -60,3 +60,11 @@ class UserModel(AbstractBaseUser):
         return True
 
 
+
+class ProfileModel(models.Model):
+    user = models.OneToOneField(UserModel, on_delete=models.CASCADE)
+    image = models.ImageField(null=True, blank=True)
+
+    def __str__(self):
+        return self.user.name
+    
