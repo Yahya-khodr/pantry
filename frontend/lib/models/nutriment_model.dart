@@ -2,7 +2,7 @@ class Nutriments {
   int? fat;
   int? proteins;
   int? salt;
-  double? sodium;
+  int? sodium;
   int? sugars;
   int? fiber;
   int? saturatedFat;

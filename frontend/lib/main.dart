@@ -15,11 +15,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-       providers: [
+      providers: [
         ChangeNotifierProvider(create: (_) => ProductViewModel()),
       ],
       child: MaterialApp(
-        title: 'Flutter Demo',
+        title: 'Pantry Tracker',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
             primarySwatch: Colors.blue,

@@ -1,16 +1,17 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:frontend/resources/constants.dart';
+import 'package:frontend/models/http_response.dart';
+import 'package:frontend/models/product_response.dart';
+import 'package:frontend/viewmodels/product_viewmodel.dart';
 import 'package:frontend/views/screens/home_screen.dart';
+import 'package:frontend/views/screens/item_detail_screen.dart';
 import 'package:frontend/views/screens/items_screen.dart';
 import 'package:frontend/views/screens/profile_screen.dart';
 import 'package:frontend/views/screens/shop_screen.dart';
-import 'package:frontend/views/widgets/custom_appbar_widget.dart';
 import 'package:frontend/views/widgets/tabbar_material_widget.dart';
+import 'package:provider/provider.dart';
 
 import '../../resources/palette.dart';
 
@@ -24,7 +25,7 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   int index = 0;
 
-  String barcode = 'Unknown';
+  String barcode = "Unknown";
   final screens = const <Widget>[
     HomeScreen(),
     ShopScreen(),
@@ -33,6 +34,7 @@ class _MainScreenState extends State<MainScreen> {
   ];
   @override
   Widget build(BuildContext context) {
+    ProductViewModel productViewModel = context.watch<ProductViewModel>();
     return Scaffold(
       extendBody: true,
       body: screens[index],
@@ -41,9 +43,13 @@ class _MainScreenState extends State<MainScreen> {
         onChangedTab: onChangedTab,
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: (() {
-          scanBarcode(barcode);
-          
+        onPressed: (() async {
+          scanBarcode().then((value) async {
+            await productViewModel.fetchProduct(barcode);
+          }).then((value) => Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => const ItemDetailScreen())));
         }),
         backgroundColor: Palette.appBarColor,
         child: const FaIcon(FontAwesomeIcons.barcode),
@@ -58,9 +64,9 @@ class _MainScreenState extends State<MainScreen> {
     });
   }
 
-  Future<void> scanBarcode(String code) async {
+  Future<void> scanBarcode() async {
     try {
-      code = await FlutterBarcodeScanner.scanBarcode(
+      final barcode = await FlutterBarcodeScanner.scanBarcode(
         '#ff6666',
         'Cancel',
         true,
@@ -68,8 +74,7 @@ class _MainScreenState extends State<MainScreen> {
       );
       if (!mounted) return;
       setState(() {
-        barcode = code;
-        log("barcode:" + barcode);
+        this.barcode = barcode;
       });
     } on PlatformException {
       barcode = 'Failed to get platform version';

@@ -29,9 +29,9 @@ class ProductViewModel extends ChangeNotifier {
   fetchProduct(String barcode) async {
     setLoading(true);
     var response = await _productService.fetchProduct(barcode);
-    if (response.status == 1) {
-      setProduct(response.product as Product);
-      setNutriments(response.product?.nutriments as Nutriments);
+    if (response.isSuccessful) {
+      setProduct(response.data.product!);
+      setNutriments(response.data.product?.nutriments as Nutriments);
     }
     setLoading(false);
   }
