@@ -1,15 +1,15 @@
 
 import 'package:frontend/models/product_model.dart';
 
-class ProductData {
+class ProductResponse {
   Product? product;
   final int status;
 
-  ProductData( {
+  ProductResponse( {
     this.product, required this.status,
   });
-  factory ProductData.fromJson(Map<String, dynamic> jsonData) {
-    return ProductData(
+  factory ProductResponse.fromJson(Map<String, dynamic> jsonData) {
+    return ProductResponse(
       product: jsonData['product'] = Product.fromJson(
         jsonData['product'],
       ),
