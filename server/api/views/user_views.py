@@ -1,12 +1,12 @@
 
-
+from django.core.files.base import ContentFile
+import base64
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST, HTTP_404_NOT_FOUND
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import authenticate
-
 from api.serializers import user_serializer
 from ..models import *
 from django.utils.text import  slugify
@@ -64,3 +64,28 @@ def profile_view(request):  # profile view
     serialized_profile = user_serializer.ProfileModelSerializer(profile, many=False).data
 
     return Response({"user": serialized_user, "profile": serialized_profile}, status=HTTP_200_OK)
+
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def update_user(request):  # edit profile view
+    data = request.data
+    name = data['name']
+    email = data['email']
+
+    try:
+        user = UserModel.objects.get(id=request.user.id)
+        if user.name != name:
+            user.name = name
+
+        if user.email != email:
+            user.email = email
+
+        user.save()
+        return Response(status=HTTP_200_OK)
+    except:
+        return Response(status=HTTP_404_NOT_FOUND)
+
+
+
