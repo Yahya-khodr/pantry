@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:frontend/models/http_response.dart';
 import 'package:frontend/services/user_service.dart';
@@ -115,6 +114,7 @@ class RegisterScreenState extends State<RegisterScreen> {
                   ),
                   RoundedButton(
                       text: "Register",
+                      width: size.width * 0.3,
                       onPressed: () {
                         setState(() {
                           _name = _nameController.text;
