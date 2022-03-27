@@ -52,17 +52,18 @@ def add_item(request):
         total_items = items.count()
         if total_items == 0:
             ItemModel.objects.create(
-            user = user, product = product, company_name = data['company_name'],
+            user = user, product = product, company_name = data['company_name'],item_total= product.product_quantity,
             quantity = 1, expiry_date = data['expiry_date'], purchased_date= data['purchased_date']
             )
         else:
             for item in items:
                 if item.product.product_name == product.product_name:
                     item.quantity += 1
+                    item.item_total = item.quantity * item.product.product_quantity
                     item.save()
                     return Response(status=status.HTTP_200_OK)
             ItemModel.objects.create(
-            user = user, product = product, company_name = data['company_name'],
+            user = user, product = product, company_name = data['company_name'],item_total= product.product_quantity,
             quantity = 1, expiry_date = data['expiry_date'], purchased_date= data['purchased_date']
             )
     except:
