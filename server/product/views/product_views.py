@@ -1,12 +1,11 @@
 
 
-from unicodedata import category
-from django.http import JsonResponse
-from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from rest_framework.response import Response 
+from rest_framework.decorators import api_view , permission_classes
+from rest_framework.permissions import IsAuthenticated
 from product.serializers.product_serializer import *
 from api.serializers.user_serializer import *
-from rest_framework.parsers import JSONParser 
+from rest_framework import status
 from ..models import *
 
 
@@ -39,21 +38,45 @@ def get_product_by_category(request, category):
     )
     serializer = ProductModelSerializer(product, many = True)
     return Response(serializer.data)
+      
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def add_item(request):
+    data = request.data
+    user = UserModel.objects.get(id = request.user.id)
+    product = ProductModel.objects.get(id = data["product_id"])
+
+    try:
+        items = ItemModel.objects.filter(user = user)
+        total_items = items.count()
+        if total_items == 0:
+            ItemModel.objects.create(
+            user = user, product = product, company_name = data['company_name'],
+            quantity = 1, expiry_date = data['expiry_date'], purchased_date= data['purchased_date']
+            )
+        else:
+            for item in items:
+                if item.product.product_name == product.product_name:
+                    item.quantity += 1
+                    item.save()
+                    return Response(status=status.HTTP_200_OK)
+            ItemModel.objects.create(
+            user = user, product = product, company_name = data['company_name'],
+            quantity = 1, expiry_date = data['expiry_date'], purchased_date= data['purchased_date']
+            )
+    except:
+         return Response(status=status.HTTP_404_NOT_FOUND)
 
 
 
-
-# @api_view(['POST'])
-# def add_item(request):
-#     data = request.data
-#     user = UserModel.objects.get(id = request.user.id)
-#     product = ProductModel.objects.get(id = data['product_id'])
-
-#     try:
-#         item = ItemModel.objects.get(user=user)
-#         total_item = item.count()
-
-#         if total_item == 0 :
-#             ItemModel.objects.create(
-#                 user = user ,product = product,quantity = 1
-#             )
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def get_items(request):
+    try:
+        user = UserModel.objects.get(id = request.user.id)
+        items = ItemModel.objects.filter(user= user)
+        serializer = ItemModelSerializer(items , many = True)
+        return Response(serializer.data , status=status.HTTP_200_OK)
+    except:
+        return Response(status=status.HTTP_404_NOT_FOUND)
