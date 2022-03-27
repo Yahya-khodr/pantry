@@ -16,7 +16,7 @@ class ProductModel(models.Model):
     product_name = models.TextField()
     product_quantity = models.TextField()
     product_image = models.ImageField(null= True, blank = True)
-    category = models.ForeignKey(CategoryModel, models.CASCADE, null=True, blank=True,)
+    category = models.ForeignKey(CategoryModel, models.CASCADE,)
 
     def __str__(self):
         return self.product_name
@@ -26,10 +26,7 @@ class ProductModel(models.Model):
 class ItemModel(models.Model):
     user = models.ForeignKey(UserModel,models.CASCADE, )
     product = models.ForeignKey(ProductModel, models.CASCADE,)
-    company_name = models.CharField(max_length=255)
     expiry_date = models.DateField()
-    quantity = models.IntegerField(default=0)
     purchased_date = models.DateField()
-    item_total = models.FloatField()
     created_date = models.DateField(auto_now_add=True)
     update_date = models.DateField(auto_now=True)

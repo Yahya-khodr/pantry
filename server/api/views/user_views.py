@@ -33,6 +33,7 @@ def login_view(request):
 
 @api_view(['POST'])
 def signup_view(request):
+    print(request.data)
     data = request.data
     name = data['name']
     email = data['email']
@@ -116,11 +117,11 @@ def update_profile_image(request):
     
     image_file = ContentFile(base64.b64decode(file), name)
 
-    user = UserModel.objects.get(id=request.user.id)
+    user= request.user
     profile = ProfileModel.objects.get(user=user)
     profile.image = image_file
     profile.save()
-    profile = ProfileModel.objects.get(user=user)
+    
 
     serialized_user_data = user_serializer.UserModelSerializer(user, many=False).data
     serialized_profile_data = user_serializer.ProfileModelSerializer(profile, many=False).data

@@ -12,6 +12,7 @@ urlpatterns = [
     # profile 
     path('profile/', user_views.profile_view),
     path('update_user/', user_views.update_user),
+    path('update_profile/', user_views.update_profile),
     path('update_profile_image/', user_views.update_profile_image),
 ]
 

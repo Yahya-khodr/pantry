@@ -44,26 +44,31 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     "corsheaders",
-    
+
     'product.apps.ProductConfig',
     'api.apps.ApiConfig',
-    
+
 ]
 CORS_ALLOW_ALL_ORIGINS = True
- 
+
 
 AUTH_USER_MODEL = 'api.UserModel'
 
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-               'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
     ),
+    'DEFAULT_PARSER_CLASSES': (
+        'rest_framework.parsers.FormParser',
+        'rest_framework.parsers.MultiPartParser',
+        'rest_framework.parsers.JSONParser',
+    )
 }
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
-    
+
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -142,6 +147,7 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 MEDIA_URL = '/images/'
+
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
 
 # Default primary key field type
