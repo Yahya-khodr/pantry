@@ -107,3 +107,21 @@ def update_profile(request):
     return Response({"message": "Profile updated successfully"}, status=HTTP_200_OK)
 
 
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def update_profile_image(request):
+    data = request.data
+    file = data["file"]
+    name = data["name"]
+    
+    image_file = ContentFile(base64.b64decode(file), name)
+
+    user = UserModel.objects.get(id=request.user.id)
+    profile = ProfileModel.objects.get(user=user)
+    profile.image = image_file
+    profile.save()
+    profile = ProfileModel.objects.get(user=user)
+
+    serialized_user_data = user_serializer.UserModelSerializer(user, many=False).data
+    serialized_profile_data = user_serializer.ProfileModelSerializer(profile, many=False).data
+    return Response({"user": serialized_user_data, "profile": serialized_profile_data}, status=HTTP_200_OK)
