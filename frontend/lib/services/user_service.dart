@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
+import 'package:frontend/models/user_model.dart';
 import 'package:frontend/resources/constants.dart';
 import 'package:http/http.dart' as http;
 import 'package:frontend/models/http_response.dart';
@@ -65,4 +66,29 @@ class UserService with ChangeNotifier {
       return HTTPResponse(false, "", "Error Occurred", 400);
     }
   }
+
+  static Future<UserProfile> getUserDetails(String token) async {
+    dynamic userData = [];
+    Uri url = Uri.parse(Constants.getUserDetailsUrl);
+
+    http.Response response = await http.get(
+      url,
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Token " + token,
+      },
+    );
+    if (response.statusCode == 200) {
+     
+      userData = json.decode(response.body);
+      User user = User.fromJson(userData['user']);
+      Profile profile = Profile.fromJson(userData['profile']);
+      return UserProfile(user: user, profile: profile);
+    } else {
+      return userData;
+    }
+  }
+
 }
+
+

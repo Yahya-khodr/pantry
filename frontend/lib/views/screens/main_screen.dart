@@ -5,6 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:frontend/models/http_response.dart';
 import 'package:frontend/models/product_response.dart';
 import 'package:frontend/viewmodels/product_viewmodel.dart';
+import 'package:frontend/views/screens/create_item_screen.dart';
 import 'package:frontend/views/screens/home_screen.dart';
 import 'package:frontend/views/screens/item_detail_screen.dart';
 import 'package:frontend/views/screens/items_screen.dart';
@@ -26,6 +27,7 @@ class _MainScreenState extends State<MainScreen> {
   int index = 0;
 
   String barcode = "Unknown";
+  bool _isLoading = false;
   final screens = const <Widget>[
     HomeScreen(),
     ShopScreen(),
@@ -37,7 +39,11 @@ class _MainScreenState extends State<MainScreen> {
     ProductViewModel productViewModel = context.watch<ProductViewModel>();
     return Scaffold(
       extendBody: true,
-      body: screens[index],
+      body: _isLoading
+          ? const Center(
+              child: CircularProgressIndicator(),
+            )
+          : screens[index],
       bottomNavigationBar: TabBarMaterialWidget(
         index: index,
         onChangedTab: onChangedTab,
@@ -45,11 +51,31 @@ class _MainScreenState extends State<MainScreen> {
       floatingActionButton: FloatingActionButton(
         onPressed: (() async {
           scanBarcode().then((value) async {
+            setState(() {
+              _isLoading = true;
+            });
             await productViewModel.fetchProduct(barcode);
-          }).then((value) => Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => const ItemDetailScreen())));
+          }).then((value) {
+            setState(() {
+              _isLoading = false;
+            });
+            if (productViewModel.product == null) {
+              
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const CreateItemScreen(),
+                ),
+              );
+            } else {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const ItemDetailScreen(),
+                ),
+              );
+            }
+          });
         }),
         backgroundColor: Palette.appBarColor,
         child: const FaIcon(FontAwesomeIcons.barcode),

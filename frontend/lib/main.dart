@@ -3,6 +3,8 @@ import 'package:frontend/resources/palette.dart';
 import 'package:frontend/viewmodels/product_viewmodel.dart';
 import 'package:frontend/views/screens/auth_screens/auth_screen.dart';
 import 'package:frontend/views/screens/main_screen.dart';
+
+import 'package:frontend/views/screens/update_profile_screens/update.dart';
 import 'package:provider/provider.dart';
 
 void main() {

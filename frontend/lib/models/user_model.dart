@@ -36,11 +36,11 @@ class User {
 
 class Profile {
   final String id;
-  final String imageUrl;
-  final int weight;
-  final int height;
-  final DateTime birthDate;
-  final String gender;
+  String? imageUrl;
+  int? weight;
+  int? height;
+  DateTime? birthDate;
+  String? gender;
 
   Profile({
     required this.id,
@@ -76,11 +76,11 @@ class Profile {
 }
 
 class UserProfile {
-  final User user;
-  final Profile profile;
+  User? user;
+  Profile? profile;
 
   UserProfile({
-    required this.user,
-    required this.profile,
+     this.user,
+     this.profile,
   });
 }

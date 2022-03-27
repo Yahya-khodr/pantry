@@ -32,7 +32,10 @@ class ProductViewModel extends ChangeNotifier {
     if (response.isSuccessful) {
       setProduct(response.data.product!);
       setNutriments(response.data.product?.nutriments as Nutriments);
+      
     }
     setLoading(false);
+    notifyListeners();
   }
+    
 }

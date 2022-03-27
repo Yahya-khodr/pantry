@@ -8,15 +8,20 @@ class CustomTextField extends StatefulWidget {
   final TextEditingController controller;
   final TextInputType? keyboardType;
   final String? suffixText;
+  final String? prefixText;
   final double? size;
   final Widget? suffixIcon;
+  final Widget? prefixIcon;
+
   const CustomTextField({
     Key? key,
     this.labelText,
     this.hintText,
     this.size,
     this.suffixText,
+    this.prefixText,
     this.suffixIcon,
+    this.prefixIcon,
     this.keyboardType,
     required this.controller,
     this.icon,
@@ -53,11 +58,11 @@ class _CustomTextFieldState extends State<CustomTextField> {
                 ThemeData().colorScheme.copyWith(primary: Palette.appBarColor),
           ),
           child: TextField(
-            
             keyboardType: widget.keyboardType,
             controller: widget.controller,
             cursorColor: Palette.appBarColor,
             decoration: InputDecoration(
+              prefixText: widget.prefixText,
               suffixText: widget.suffixText,
               labelText: widget.labelText,
               focusColor: Palette.appBarColor,
@@ -74,10 +79,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
                   borderRadius: BorderRadius.circular(20.0),
                   borderSide:
                       const BorderSide(color: Palette.appBarColor, width: 2.0)),
-              prefixIcon: Icon(widget.icon),
-              // prefixIcon: widget.hintText == "Email"
-              //     ? const Icon(Icons.email)
-              //     : const Icon(Icons.lock),
+              prefixIcon: widget.prefixIcon,
               suffixIcon: widget.hintText == "Password" ||
                       widget.hintText == "Confirm Password"
                   ? IconButton(
