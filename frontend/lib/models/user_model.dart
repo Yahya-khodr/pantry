@@ -33,3 +33,54 @@ class User {
     };
   }
 }
+
+class Profile {
+  final String id;
+  final String imageUrl;
+  final int weight;
+  final int height;
+  final DateTime birthDate;
+  final String gender;
+
+  Profile({
+    required this.id,
+    required this.imageUrl,
+    required this.weight,
+    required this.height,
+    required this.birthDate,
+    required this.gender,
+  });
+
+  factory Profile.fromJson(Map<String, dynamic> json) {
+    return Profile(
+      id: json['id'].toString(),
+      imageUrl: json['image'],
+      birthDate: json['birth_date'],
+      weight: json['weight'],
+      height: json['height'],
+      gender: json['gender'],
+      
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'image': imageUrl,
+      'birth_date': birthDate,
+      'weight': weight,
+      'height': height,
+      'gender': gender,
+    };
+  }
+}
+
+class UserProfile {
+  final User user;
+  final Profile profile;
+
+  UserProfile({
+    required this.user,
+    required this.profile,
+  });
+}
