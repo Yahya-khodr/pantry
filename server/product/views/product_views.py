@@ -81,3 +81,34 @@ def get_items(request):
         return Response(serializer.data , status=status.HTTP_200_OK)
     except:
         return Response(status=status.HTTP_404_NOT_FOUND)
+
+
+
+
+@api_view(['PUT'])
+@permission_classes([IsAuthenticated])
+def increase_quantity(request, item_id):
+    try:
+        item = ItemModel.objects.get(id=item_id)
+        item.quantity += 1
+        item.item_total = item.quantity * item.product.product_quantity
+        item.save()
+        return Response(status=status.HTTP_200_OK)
+    except:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+
+@api_view(['PUT'])
+@permission_classes([IsAuthenticated])
+def decrease_quantity(request, item_id):
+    try:
+        item = ItemModel.objects.get(id=item_id)
+        item.quantity -= 1
+        item.item_total = item.quantity * item.product.product_quantity
+        item.save()
+
+        if item.quantity <= 0:
+            item.delete()
+        return Response(status=status.HTTP_200_OK)
+    except:
+        return Response(status=status.HTTP_404_NOT_FOUND)
