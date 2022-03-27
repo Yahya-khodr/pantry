@@ -1,4 +1,6 @@
 
+from django.conf import settings  
+from django.conf.urls.static import static  
 from django.urls import path
 from api.views import user_views
 
@@ -9,5 +11,9 @@ urlpatterns = [
 
     # profile 
     path('profile/', user_views.profile_view),
-    path('update_user/', user_views.update_user)
+    path('update_user/', user_views.update_user),
+    path('update_profile_image/', user_views.update_profile_image),
 ]
+
+if settings.DEBUG:  
+        urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)  

@@ -69,7 +69,7 @@ def profile_view(request):  # profile view
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
-def update_user(request):  # edit profile view
+def update_user(request):  
     data = request.data
     name = data['name']
     email = data['email']
@@ -87,5 +87,23 @@ def update_user(request):  # edit profile view
     except:
         return Response(status=HTTP_404_NOT_FOUND)
 
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def update_profile(request):
+    data = request.data
+    weight = data['weight']
+    height = data['height']
+    gender = data['gender']
+    birth_date = data['birth_date']
+
+    user = UserModel.objects.get(id=request.user.id)
+    profile = ProfileModel.objects.get(user=user)
+    profile.gender = gender
+    profile.weight = weight
+    profile.height = height
+    profile.birth_date = birth_date
+    profile.save()
+    return Response({"message": "Profile updated successfully"}, status=HTTP_200_OK)
 
 

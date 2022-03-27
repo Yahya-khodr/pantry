@@ -1,3 +1,4 @@
+from pyexpat import model
 from django.db import models
 from django.contrib.auth.models import BaseUserManager , AbstractBaseUser
 # Create your models here.
@@ -64,7 +65,10 @@ class UserModel(AbstractBaseUser):
 class ProfileModel(models.Model):
     user = models.OneToOneField(UserModel, on_delete=models.CASCADE)
     image = models.ImageField(null=True, blank=True)
-
+    gender = models.TextField()
+    height = models.IntegerField()
+    weight = models.IntegerField()
+    birth_date = models.DateField()
     def __str__(self):
         return self.user.name
     
