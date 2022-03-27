@@ -112,3 +112,14 @@ def decrease_quantity(request, item_id):
         return Response(status=status.HTTP_200_OK)
     except:
         return Response(status=status.HTTP_404_NOT_FOUND)
+
+
+@api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
+def remove_item(request, item_id):
+    try:
+        item = ItemModel.objects.get(id=item_id)
+        item.delete()
+        return Response(status=status.HTTP_200_OK)
+    except:
+        return Response(status=status.HTTP_404_NOT_FOUND)
