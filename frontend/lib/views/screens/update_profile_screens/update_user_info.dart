@@ -25,14 +25,14 @@ class _UpdateUserInfoState extends State<UpdateUserInfo> {
         children: [
           const SizedBox(height: 20.0),
           CustomTextField(
-              labelText: "Name",
-              controller: _nameController,
-              icon: Icons.person_outline),
+            labelText: "Name",
+            controller: _nameController,
+            prefixIcon: const Icon(Icons.person_outline),
+          ),
           const SizedBox(height: 20.0),
           CustomTextField(
-           
             controller: _emailController,
-            icon: Icons.email_outlined,
+            prefixIcon: const Icon(Icons.email_outlined),
             labelText: "Email Address",
           ),
           const SizedBox(height: 20.0),

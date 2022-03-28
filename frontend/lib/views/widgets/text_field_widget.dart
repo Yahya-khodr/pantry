@@ -4,7 +4,7 @@ import 'package:frontend/resources/palette.dart';
 class CustomTextField extends StatefulWidget {
   final String? labelText;
   final String? hintText;
-  final IconData? icon;
+  
   final TextEditingController controller;
   final TextInputType? keyboardType;
   final String? suffixText;
@@ -24,7 +24,7 @@ class CustomTextField extends StatefulWidget {
     this.prefixIcon,
     this.keyboardType,
     required this.controller,
-    this.icon,
+    
   }) : super(key: key);
 
   @override
@@ -58,7 +58,6 @@ class _CustomTextFieldState extends State<CustomTextField> {
                 ThemeData().colorScheme.copyWith(primary: Palette.appBarColor),
           ),
           child: TextField(
-            textAlign: TextAlign.center,
             keyboardType: widget.keyboardType,
             controller: widget.controller,
             cursorColor: Palette.appBarColor,

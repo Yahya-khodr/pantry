@@ -83,7 +83,7 @@ class RegisterScreenState extends State<RegisterScreen> {
                   CustomTextField(
                     hintText: "Name",
                     controller: _nameController,
-                    icon: Icons.person,
+                    prefixIcon: const Icon(Icons.person) ,
                   ),
                   SizedBox(
                     height: size.height * 0.03,
@@ -91,7 +91,7 @@ class RegisterScreenState extends State<RegisterScreen> {
                   CustomTextField(
                     hintText: "Email",
                     controller: _emailController,
-                    icon: Icons.email,
+                    prefixIcon: const Icon(Icons.email),
                   ),
                   SizedBox(
                     height: size.height * 0.03,
@@ -99,7 +99,7 @@ class RegisterScreenState extends State<RegisterScreen> {
                   CustomTextField(
                     hintText: "Password",
                     controller: _passwordController,
-                    icon: Icons.lock,
+                    prefixIcon: const Icon( Icons.lock),
                   ),
                   SizedBox(
                     height: size.height * 0.03,
@@ -107,14 +107,13 @@ class RegisterScreenState extends State<RegisterScreen> {
                   CustomTextField(
                     hintText: "Confirm Password",
                     controller: _confirmPasswordController,
-                    icon: Icons.lock,
+                    prefixIcon: const Icon( Icons.lock),
                   ),
                   SizedBox(
                     height: size.height * 0.03,
                   ),
                   RoundedButton(
                       text: "Register",
-                      width: size.width * 0.3,
                       onPressed: () {
                         setState(() {
                           _name = _nameController.text;

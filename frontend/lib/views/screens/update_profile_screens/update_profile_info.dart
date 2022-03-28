@@ -31,7 +31,7 @@ class _UpdateProfileInfoState extends State<UpdateProfileInfo> {
             height: 20.0,
           ),
           CustomTextField(
-            icon: Icons.line_weight,
+            prefixIcon: const Icon( Icons.line_weight),
             controller: _weightController,
             labelText: "Weight",
             suffixText: "kg",
@@ -42,7 +42,7 @@ class _UpdateProfileInfoState extends State<UpdateProfileInfo> {
             height: 20.0,
           ),
           CustomTextField(
-            icon: Icons.height,
+            prefixIcon: const Icon( Icons.height),
             controller: _heightController,
             labelText: "Height",
             suffixText: "cm",
