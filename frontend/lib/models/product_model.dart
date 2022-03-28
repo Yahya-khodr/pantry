@@ -4,16 +4,18 @@ class Product {
   final String productName;
   final String? quantity;
   final String? productQuantity;
-  final String imageUrl;
+  final String? imageUrl;
   final Nutriments? nutriments;
   final String barcode;
+  final String? category;
 
   const Product({
     required this.productName,
     this.quantity,
     this.productQuantity,
     this.nutriments,
-    required this.imageUrl,
+    this.imageUrl,
+    this.category,
     required this.barcode,
   });
 
@@ -24,12 +26,13 @@ class Product {
       quantity: json['quantity'],
       productQuantity: json['product_quantity'],
       imageUrl: json['image_url'],
+      category: json['category'],
       nutriments: json['nutriments'] = Nutriments.fromJson(
         json['nutriments'],
       ),
     );
   }
-  Map<String,dynamic> toJson(){
+  Map<String, dynamic> toJson() {
     return {
       'id': barcode,
       'product_name': productName,
@@ -37,6 +40,7 @@ class Product {
       'product_quantity': productQuantity,
       'image_url': imageUrl,
       'nutriments': nutriments,
+      'category': category,
     };
   }
 }
