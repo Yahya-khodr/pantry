@@ -59,7 +59,7 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 14.0, vertical: 14.0),
                       child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           Container(
@@ -103,6 +103,7 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                                       ),
                                     ),
                                     TextField(
+                                      enabled: false,
                                       controller: _nameController,
                                       decoration: const InputDecoration(
                                         hintText: 'barcode',
@@ -117,6 +118,7 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                       ),
                     ),
                     ExpansionTile(
+                      initiallyExpanded: true,
                       textColor: Palette.appBarColor,
                       iconColor: Palette.appBarColor,
                       title: const Text(
@@ -135,11 +137,9 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                               CustomTextField(
                                 controller: _typeCotnroller,
                                 prefixIcon: const Padding(
-                                  padding: EdgeInsets.only(left: 8.0),
-                                  child: Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Text("Category"),
-                                  ),
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 10.0, vertical: 14.0),
+                                  child: Text("Category:"),
                                 ),
                               ),
                               const SizedBox(
@@ -148,11 +148,9 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                               CustomTextField(
                                 controller: _quantityController,
                                 prefixIcon: const Padding(
-                                  padding: EdgeInsets.only(left: 8.0),
-                                  child: Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Text("Qty"),
-                                  ),
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 10.0, vertical: 14.0),
+                                  child: Text("Qty:"),
                                 ),
                               ),
                               const SizedBox(
@@ -161,11 +159,9 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                               CustomTextField(
                                 controller: _purchaseDateController,
                                 prefixIcon: const Padding(
-                                  padding: EdgeInsets.only(left: 8.0),
-                                  child: Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Text("Purchased Date"),
-                                  ),
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 10.0, vertical: 14.0),
+                                  child: Text("Purchased Date:"),
                                 ),
                               ),
                               const SizedBox(
@@ -174,12 +170,10 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                               CustomTextField(
                                 controller: _expiryDateController,
                                 prefixIcon: const Padding(
-                                  padding: EdgeInsets.only(left: 8.0),
-                                  child: Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Text(
-                                      "Expiry date",
-                                    ),
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 10.0, vertical: 14.0),
+                                  child: Text(
+                                    "Expiry date:",
                                   ),
                                 ),
                               ),

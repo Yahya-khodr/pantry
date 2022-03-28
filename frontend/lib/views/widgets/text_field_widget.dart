@@ -58,6 +58,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
                 ThemeData().colorScheme.copyWith(primary: Palette.appBarColor),
           ),
           child: TextField(
+            textAlign: TextAlign.center,
             keyboardType: widget.keyboardType,
             controller: widget.controller,
             cursorColor: Palette.appBarColor,
