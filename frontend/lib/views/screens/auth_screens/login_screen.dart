@@ -24,6 +24,7 @@ class _LoginScreenState extends State<LoginScreen> {
   bool _isloading = false;
   @override
   Widget build(BuildContext context) {
+
     
     void _loginUser() {
       if (Validator.isValidEmail(_email) &&
@@ -36,10 +37,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
         response.then((value) {
           if (value.isSuccessful) {
-            // Utilities.fetchAndSaveUserInfo(res: value.data);
-            // setState(() {
-            //   _isloading = false;
-            // });
+            Utilities.fetchAndSaveUserInfo(res: value.data);
+            setState(() {
+              _isloading = false;
+            });
             setState(() {
               _isloading = false;
             });
@@ -88,14 +89,14 @@ class _LoginScreenState extends State<LoginScreen> {
                   CustomTextField(
                     hintText: "Password",
                     controller: _passwordController,
-                    prefixIcon: const Icon( Icons.lock),
+                    prefixIcon: const Icon(Icons.lock),
                   ),
                   SizedBox(
                     height: size.height * 0.03,
                   ),
                   RoundedButton(
                       text: "Login",
-                      width: size.width * 0.3,
+                      width: size.width / 3,
                       onPressed: () {
                         setState(() {
                           _email = _emailController.text;

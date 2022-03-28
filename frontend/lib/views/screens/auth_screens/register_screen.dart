@@ -37,6 +37,7 @@ class RegisterScreenState extends State<RegisterScreen> {
             UserService().registerUser(_name, _email, _password);
         response.then((value) {
           if (value.isSuccessful) {
+            Utilities.fetchAndSaveUserInfo(res: value.data);
             setState(() {
               _isLoading = false;
             });
@@ -83,7 +84,7 @@ class RegisterScreenState extends State<RegisterScreen> {
                   CustomTextField(
                     hintText: "Name",
                     controller: _nameController,
-                    prefixIcon: const Icon(Icons.person) ,
+                    prefixIcon: const Icon(Icons.person),
                   ),
                   SizedBox(
                     height: size.height * 0.03,
@@ -99,7 +100,7 @@ class RegisterScreenState extends State<RegisterScreen> {
                   CustomTextField(
                     hintText: "Password",
                     controller: _passwordController,
-                    prefixIcon: const Icon( Icons.lock),
+                    prefixIcon: const Icon(Icons.lock),
                   ),
                   SizedBox(
                     height: size.height * 0.03,
@@ -107,12 +108,13 @@ class RegisterScreenState extends State<RegisterScreen> {
                   CustomTextField(
                     hintText: "Confirm Password",
                     controller: _confirmPasswordController,
-                    prefixIcon: const Icon( Icons.lock),
+                    prefixIcon: const Icon(Icons.lock),
                   ),
                   SizedBox(
                     height: size.height * 0.03,
                   ),
                   RoundedButton(
+                      width: size.width / 2,
                       text: "Register",
                       onPressed: () {
                         setState(() {
