@@ -7,7 +7,7 @@ import "package:frontend/resources/constants.dart";
 import "package:http/http.dart" as http;
 
 class ProductService {
-  Future<HTTPResponse<ProductResponse>> fetchProduct(String barcode) async {
+   Future<HTTPResponse<ProductResponse>> fetchProduct(String barcode) async {
     Uri url = Uri.parse(Constants.remoteApi + barcode);
     try {
       final response = await http.get(url);
@@ -61,7 +61,7 @@ class ProductService {
   }
 
   Future<HTTPResponse<Product?>> getProduct(String barcode) async {
-    Uri url = Uri.parse(Constants.getProduct + barcode + "/");
+    Uri url = Uri.parse(Constants.getProductUrl + barcode + "/");
 
     try {
       final response = await http.get(url, headers: {
