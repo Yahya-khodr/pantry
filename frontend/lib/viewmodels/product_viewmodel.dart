@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:frontend/models/http_response.dart';
 import 'package:frontend/models/nutriment_model.dart';
 import 'package:frontend/models/product_model.dart';
 import 'package:frontend/services/product_service.dart';
@@ -26,16 +27,38 @@ class ProductViewModel extends ChangeNotifier {
     _product = product;
   }
 
+  // from public api (remote api for the scan)
   fetchProduct(String barcode) async {
     setLoading(true);
     var response = await _productService.fetchProduct(barcode);
     if (response.isSuccessful) {
       setProduct(response.data.product!);
       setNutriments(response.data.product?.nutriments as Nutriments);
-      
     }
     setLoading(false);
     notifyListeners();
   }
-    
+
+  addProduct(String token, Product product) async {
+    setLoading(true);
+    var resposne = await _productService.addProduct(token, product);
+    if (resposne.isSuccessful) {
+      setProduct(product);
+      return HTTPResponse(
+          true, resposne.data, "Success", resposne.responseCode);
+    }
+    setLoading(false);
+    notifyListeners();
+  }
+
+  // from local api database
+  getProduct(String barcode) async {
+    setLoading(true);
+    var response = await _productService.getProduct(barcode);
+    if (response.isSuccessful) {
+      setProduct(response.data!);
+    }
+    setLoading(false);
+    notifyListeners();
+  }
 }
