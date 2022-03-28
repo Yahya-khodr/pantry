@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:frontend/models/http_response.dart';
 import 'package:frontend/models/nutriment_model.dart';
@@ -27,7 +30,7 @@ class ProductViewModel extends ChangeNotifier {
     _product = product;
   }
 
-  // from public api (remote api for the scan)
+  // for remote api (for the scan)
   fetchProduct(String barcode) async {
     setLoading(true);
     var response = await _productService.fetchProduct(barcode);
@@ -39,6 +42,7 @@ class ProductViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  // for local api (local database)
   addProduct(String token, Product product) async {
     setLoading(true);
     var resposne = await _productService.addProduct(token, product);
@@ -51,12 +55,12 @@ class ProductViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  // from local api database
   getProduct(String barcode) async {
     setLoading(true);
     var response = await _productService.getProduct(barcode);
     if (response.isSuccessful) {
       setProduct(response.data!);
+     
     }
     setLoading(false);
     notifyListeners();
