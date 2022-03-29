@@ -1,22 +1,22 @@
 import 'nutriment_model.dart';
 
 class Product {
-  final String productName;
+  final String? productName;
   final String? quantity;
   final String? productQuantity;
   final String? imageUrl;
   final Nutriments? nutriments;
-  final String barcode;
+  final String? barcode;
   final String? category;
 
   const Product({
-    required this.productName,
+    this.productName,
     this.quantity,
     this.productQuantity,
     this.nutriments,
     this.imageUrl,
     this.category,
-    required this.barcode,
+    this.barcode,
   });
 
   factory Product.fromJson(Map<String, dynamic> json) {
