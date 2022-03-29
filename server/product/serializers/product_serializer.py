@@ -2,6 +2,7 @@
 from rest_framework import serializers
 from ..models import *
 
+
 class CategoryModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = CategoryModel
@@ -11,11 +12,14 @@ class CategoryModelSerializer(serializers.ModelSerializer):
 class ProductModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProductModel
-        fields = '__all__'
-
+        fields = ('id', 'barcode', 'product_name',
+                  'product_quantity', 'product_image', 'category_id')
 
 
 class ItemModelSerializer(serializers.ModelSerializer):
+    product = ProductModelSerializer(many=False)
+
     class Meta:
         model = ItemModel
-        fields= '__all__'
+        fields = ('id', 'user_id', 'product',
+                  'expiry_date', 'purchased_date')
