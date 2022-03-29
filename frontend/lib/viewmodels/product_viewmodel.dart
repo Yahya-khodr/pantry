@@ -36,7 +36,7 @@ class ProductViewModel extends ChangeNotifier {
     var response = await _productService.fetchProduct(barcode);
     if (response.isSuccessful) {
       setProduct(response.data.product!);
-      setNutriments(response.data.product?.nutriments as Nutriments);
+      // setNutriments(response.data.product?.nutriments as Nutriments);
     }
     setLoading(false);
     notifyListeners();
