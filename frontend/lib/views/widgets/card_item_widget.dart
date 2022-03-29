@@ -1,76 +1,125 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/resources/palette.dart';
 
 class CardItem extends StatelessWidget {
-  const CardItem({Key? key}) : super(key: key);
+  final ImageProvider image;
+  final String name;
+  final String qty;
+  final String date;
+  final String purchased;
+  const CardItem({
+    Key? key,
+    required this.image,
+    required this.name,
+    required this.qty,
+    required this.date,
+    required this.purchased,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Card(
       clipBehavior: Clip.antiAlias,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(24),
+        borderRadius: BorderRadius.circular(20),
       ),
       elevation: 5,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Stack(
-            children: [
-              Ink.image(
-                image: const NetworkImage(
-                  'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1327&q=80',
+          Expanded(
+            flex: 4,
+            child: Stack(
+              children: [
+                Ink.image(
+                  image: image,
+                  fit: BoxFit.cover,
+                  height: 100,
                 ),
-                fit: BoxFit.cover,
-                height: 100,
-              ),
-            ],
-          ),
-          Padding(
-            padding: const EdgeInsets.all(16).copyWith(bottom: 0),
-            child: const Text(
-              'Product Name',
-              style: TextStyle(fontSize: 16),
+              ],
             ),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              ButtonBar(
-                alignment: MainAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                buttonHeight: 15,
-                buttonMinWidth: 30,
-                children: <Widget>[
-                  MaterialButton(
-                    onPressed: () {},
-                    shape: const CircleBorder(
-                      side: BorderSide(color: Colors.green),
-                    ),
-                    child: const Icon(
-                      Icons.add,
-                      color: Colors.green,
-                    ),
+          Expanded(
+            flex: 3,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 8.0, top: 8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    name,
+                    style: const TextStyle(fontSize: 12),
                   ),
-                  const Text(
-                    "20",
-                    style: TextStyle(),
-                    maxLines: 2,
+                  Text(
+                    'Expires in: $date d',
+                    style: const TextStyle(fontSize: 12),
                   ),
-                  MaterialButton(
-                    onPressed: () {},
-                    shape: const CircleBorder(
-                      side: BorderSide(color: Colors.green),
-                    ),
-                    child: const Icon(
-                      Icons.remove,
-                      color: Colors.green,
-                    ),
+                  Text(
+                    'Purchased :' + purchased,
+                    style: const TextStyle(fontSize: 12),
+                  ),
+                  Text(
+                    'Qty:' + qty,
+                    style: const TextStyle(fontSize: 12),
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ],
               ),
-            ],
+            ),
+          ),
+          Expanded(
+            flex: 2,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ButtonBar(
+                  alignment: MainAxisAlignment.center,
+                  buttonHeight: 10,
+                  buttonMinWidth: 20,
+                  children: <Widget>[
+                    Expanded(
+                      child: CircleButtonIcon(
+                        onPressed: () {},
+                        icon: Icons.remove,
+                      ),
+                    ),
+                    Expanded(
+                      child: CircleButtonIcon(
+                        onPressed: () {},
+                        icon: Icons.add,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class CircleButtonIcon extends StatelessWidget {
+  final VoidCallback onPressed;
+  final IconData icon;
+  const CircleButtonIcon({
+    Key? key,
+    required this.onPressed,
+    required this.icon,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialButton(
+      onPressed: () {},
+      shape: const CircleBorder(
+        side: BorderSide(color: Palette.appBarColor),
+      ),
+      child: Icon(
+        icon,
+        color: Palette.appBarColor,
       ),
     );
   }
