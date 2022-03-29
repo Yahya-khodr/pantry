@@ -3,6 +3,7 @@ import 'package:frontend/models/user_model.dart';
 import 'package:frontend/services/user_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/intl.dart';
+
 class Utilities {
   static fetchAndSaveUserInfo({required String res}) async {
     Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
@@ -19,21 +20,21 @@ class Utilities {
       prefs.setString("email", _user?.email ?? "");
       prefs.setString("token", _user?.token ?? "");
       prefs.setString("imageUrl", _profile?.imageUrl ?? "");
-      prefs.setString("birth_date", (_profile?.birthDate ?? "") as String) ;
+      prefs.setString("birth_date", (_profile?.birthDate ?? "") as String);
       prefs.setInt("weight", _profile?.weight ?? 0);
       prefs.setInt("height", _profile?.height ?? 0);
       prefs.setString("gender", _profile?.gender ?? "");
     });
   }
-   static Future<UserProfile> getUserProfile() async {
-    UserProfile _userProfile =  UserProfile();
+
+  static Future<UserProfile> getUserProfile() async {
+    UserProfile _userProfile = UserProfile();
 
     Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
     final SharedPreferences prefs = await _prefs;
     _userProfile.user?.name = prefs.getString("name") as String;
     _userProfile.user?.email = prefs.getString("email") as String;
     _userProfile.profile?.imageUrl = prefs.getString("imageUrl");
-    
 
     return _userProfile;
   }
@@ -83,5 +84,11 @@ class Utilities {
     var dateTime = DateTime.parse(date);
     var formatter = DateFormat("yyyy-MM-dd");
     return formatter.format(dateTime);
+  }
+
+  static int daysBetween(DateTime from, DateTime to) {
+    from = DateTime(from.year, from.month, from.day);
+    to = DateTime(to.year, to.month, to.day);
+    return (to.difference(from).inHours / 24).round();
   }
 }
