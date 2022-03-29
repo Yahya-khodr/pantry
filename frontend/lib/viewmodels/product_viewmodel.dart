@@ -43,26 +43,24 @@ class ProductViewModel extends ChangeNotifier {
   }
 
   // for local api (local database)
-  addProduct(String token, Product product) async {
+  Future<bool> addProduct(String token, Product product) async {
     setLoading(true);
     var resposne = await _productService.addProduct(token, product);
     if (resposne.isSuccessful) {
       setProduct(product);
-      return HTTPResponse(
-          true, resposne.data, "Success", resposne.responseCode);
+      return true;
+    } else {
+      return false;
     }
-    setLoading(false);
-    notifyListeners();
   }
 
-  getProduct(String barcode) async {
+  Future<void> getProduct(String barcode) async {
     setLoading(true);
-    var response = await _productService.getProduct(barcode);
+    final response = await _productService.getProduct(barcode);
     if (response.isSuccessful) {
-      setProduct(response.data!);
-     
+      log(response.message);
+    } else {
+      log(response.message);
     }
-    setLoading(false);
-    notifyListeners();
   }
 }
