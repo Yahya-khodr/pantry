@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend/models/user_model.dart';
 import 'package:frontend/services/user_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:intl/intl.dart';
 class Utilities {
   static fetchAndSaveUserInfo({required String res}) async {
     Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
@@ -77,5 +77,11 @@ class Utilities {
         );
       },
     );
+  }
+
+  static String stringToDateTime(String date) {
+    var dateTime = DateTime.parse(date);
+    var formatter = DateFormat("yyyy-MM-dd");
+    return formatter.format(dateTime);
   }
 }
