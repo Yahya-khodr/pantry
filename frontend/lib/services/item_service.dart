@@ -1,12 +1,12 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:frontend/models/http_response.dart';
+import 'package:flutter/foundation.dart';
 import 'package:frontend/models/item_model.dart';
 import 'package:frontend/resources/constants.dart';
 import "package:http/http.dart" as http;
 
-class ItemService {
+class ItemService with ChangeNotifier {
   static Future<bool> addItem(String token, Item item) async {
     Uri url = Uri.parse(Constants.addItemUrl);
     try {
@@ -32,30 +32,16 @@ class ItemService {
     }
   }
 
-  static Future<HTTPResponse<List<Item>?>> getItems(String token) async {
+  static Future<List<Item>> fetchItems(String token) async {
     Uri url = Uri.parse(Constants.getItemsUrl);
-
-    try {
-      final response = await http.get(
-        url,
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": "Token " + token,
-        },
-      );
-      if (response.statusCode == 200) {
-        return HTTPResponse(true, itemsListModelFromJson(response.body),
-            "Success", response.statusCode);
-      } else {
-        return HTTPResponse(false, jsonDecode(response.body),
-            "Failed to get items", response.statusCode);
-      }
-    } on SocketException {
-      return HTTPResponse(false, null, "No Internet connection", 400);
-    } on FormatException {
-      return HTTPResponse(false, null, "Invalid Response", 400);
-    } catch (e) {
-      return HTTPResponse(false, null, "Error occured", 400);
+    final response = await http.get(url, headers: {
+      "Authorization": "Token " + token,
+    });
+    if (response.statusCode == 200) {
+      List jsonResponse = json.decode(response.body);
+      return jsonResponse.map((data) => Item.fromJson(data)).toList();
+    } else {
+      throw Exception('Failed to load items');
     }
   }
 }
