@@ -15,7 +15,7 @@ class Item {
   final String purchasedDate;
 
    Item({
-    required this.barcode,
+    this.barcode,
     required this.expiryDate,
     required this.purchasedDate,
     this.product,

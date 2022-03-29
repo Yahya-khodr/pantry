@@ -1,19 +1,19 @@
 import 'nutriment_model.dart';
 
 class Product {
-  final String? productName;
-  final String? quantity;
-  final String? productQuantity;
-  final String? imageUrl;
-  final Nutriments? nutriments;
-  final String? barcode;
-  final String? category;
+  String? productName;
+  String? quantity;
+  String? productQuantity;
+  String? imageUrl;
+  // Nutriments? nutriments;
+  String? barcode;
+  String? category;
 
-  const Product({
+  Product({
     this.productName,
     this.quantity,
     this.productQuantity,
-    this.nutriments,
+    // this.nutriments,
     this.imageUrl,
     this.category,
     this.barcode,
@@ -27,9 +27,9 @@ class Product {
       productQuantity: json['product_quantity'],
       imageUrl: json['image_url'],
       category: json['category'],
-      nutriments: json['nutriments'] = Nutriments.fromJson(
-        json['nutriments'],
-      ),
+      // nutriments: json['nutriments'] = Nutriments.fromJson(
+      //   json['nutriments'],
+      // ),
     );
   }
   Map<String, dynamic> toJson() {
@@ -39,7 +39,7 @@ class Product {
       'quantity': quantity,
       'product_quantity': productQuantity,
       'image_url': imageUrl,
-      'nutriments': nutriments,
+      // 'nutriments': nutriments,
       'category': category,
     };
   }
