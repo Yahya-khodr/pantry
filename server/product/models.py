@@ -1,7 +1,7 @@
 
 
 from django.db import models
-from api.models import UserModel
+from users.models import UserModel
 # Create your models here.
 
 class CategoryModel(models.Model):

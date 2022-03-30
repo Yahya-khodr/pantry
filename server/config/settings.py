@@ -46,13 +46,13 @@ INSTALLED_APPS = [
     "corsheaders",
 
     'product.apps.ProductConfig',
-    'api.apps.ApiConfig',
+    'users.apps.UsersConfig',
 
 ]
 CORS_ALLOW_ALL_ORIGINS = True
 
 
-AUTH_USER_MODEL = 'api.UserModel'
+AUTH_USER_MODEL = 'users.UserModel'
 
 
 REST_FRAMEWORK = {

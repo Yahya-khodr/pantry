@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST, HTTP_404_NOT_FOUND
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import authenticate
-from api.serializers import user_serializer
+from users.serializers import user_serializer
 from ..models import *
 from django.utils.text import  slugify
 

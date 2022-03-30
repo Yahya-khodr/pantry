@@ -12,7 +12,7 @@ class CategoryModelSerializer(serializers.ModelSerializer):
 class ProductModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProductModel
-        fields = ('id', 'barcode', 'product_name',
+        fields = ('barcode', 'product_name',
                   'product_quantity', 'product_image', 'category_id')
 
 
@@ -21,5 +21,5 @@ class ItemModelSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ItemModel
-        fields = ('id', 'user_id', 'product',
+        fields = ('user_id', 'product',
                   'expiry_date', 'purchased_date')
