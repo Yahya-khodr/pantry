@@ -6,7 +6,11 @@ class CardItem extends StatelessWidget {
   final String name;
   final String qty;
   final String date;
+  final int total;
   final String purchased;
+  final VoidCallback onTap;
+  final VoidCallback increase;
+  final VoidCallback decrease;
   const CardItem({
     Key? key,
     required this.image,
@@ -14,22 +18,26 @@ class CardItem extends StatelessWidget {
     required this.qty,
     required this.date,
     required this.purchased,
+    required this.onTap,
+    required this.increase,
+    required this.decrease,
+    required this.total,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      clipBehavior: Clip.antiAlias,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20),
-      ),
-      elevation: 5,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-            flex: 4,
-            child: Stack(
+    return GestureDetector(
+      onTap: onTap,
+      child: Card(
+        clipBehavior: Clip.antiAlias,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+        elevation: 5,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Stack(
               children: [
                 Ink.image(
                   image: image,
@@ -38,64 +46,75 @@ class CardItem extends StatelessWidget {
                 ),
               ],
             ),
-          ),
-          Expanded(
-            flex: 3,
-            child: Padding(
-              padding: const EdgeInsets.only(left: 8.0, top: 8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            Expanded(
+              flex: 2,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 8.0, top: 8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      name.toUpperCase(),
+                      style: const TextStyle(
+                          fontSize: 12, fontWeight: FontWeight.w500),
+                    ),
+                    RichText(
+                        text: TextSpan(
+                            text: 'Expires in:',
+                            style: const TextStyle(
+                                fontSize: 12, color: Colors.black),
+                            children: <TextSpan>[
+                          TextSpan(
+                            text: '$date d',
+                            style: const TextStyle(color: Palette.appBarColor),
+                          )
+                        ])),
+                    Text(
+                      'Purchased :' + purchased,
+                      style: const TextStyle(fontSize: 12),
+                    ),
+                    RichText(
+                        text: TextSpan(
+                            text: 'Qty:',
+                            style: const TextStyle(
+                                fontSize: 12, color: Colors.black),
+                            children: <TextSpan>[
+                          TextSpan(
+                            text: qty,
+                            style: const TextStyle(color: Palette.appBarColor),
+                          )
+                        ])),
+                  ],
+                ),
+              ),
+            ),
+            Expanded(
+              flex: 1,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    name,
-                    style: const TextStyle(fontSize: 12),
-                  ),
-                  Text(
-                    'Expires in: $date d',
-                    style: const TextStyle(fontSize: 12),
-                  ),
-                  Text(
-                    'Purchased :' + purchased,
-                    style: const TextStyle(fontSize: 12),
-                  ),
-                  Text(
-                    'Qty:' + qty,
-                    style: const TextStyle(fontSize: 12),
-                    overflow: TextOverflow.ellipsis,
+                  ButtonBar(
+                    alignment: MainAxisAlignment.center,
+                    buttonHeight: 10,
+                    buttonMinWidth: 20,
+                    children: <Widget>[
+                      CircleButtonIcon(
+                        onPressed: increase,
+                        icon: Icons.remove,
+                      ),
+                      Text(total.toString()),
+                      CircleButtonIcon(
+                        onPressed: decrease,
+                        icon: Icons.add,
+                      ),
+                    ],
                   ),
                 ],
               ),
             ),
-          ),
-          Expanded(
-            flex: 2,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ButtonBar(
-                  alignment: MainAxisAlignment.center,
-                  buttonHeight: 10,
-                  buttonMinWidth: 20,
-                  children: <Widget>[
-                    Expanded(
-                      child: CircleButtonIcon(
-                        onPressed: () {},
-                        icon: Icons.remove,
-                      ),
-                    ),
-                    Expanded(
-                      child: CircleButtonIcon(
-                        onPressed: () {},
-                        icon: Icons.add,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
