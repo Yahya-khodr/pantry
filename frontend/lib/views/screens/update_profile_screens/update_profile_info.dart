@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/resources/palette.dart';
-import 'package:frontend/views/widgets/custom_text_input_widget.dart';
 import 'package:frontend/views/widgets/rounded_button_widget.dart';
 import 'package:frontend/views/widgets/text_field_widget.dart';
 
