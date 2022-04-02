@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:frontend/models/http_response.dart';
 import 'package:frontend/services/user_service.dart';
@@ -24,8 +23,6 @@ class _LoginScreenState extends State<LoginScreen> {
   bool _isloading = false;
   @override
   Widget build(BuildContext context) {
-
-    
     void _loginUser() {
       if (Validator.isValidEmail(_email) &&
           Validator.isValidPassword(_password)) {

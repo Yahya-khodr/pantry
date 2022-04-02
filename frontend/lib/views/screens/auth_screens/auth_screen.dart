@@ -1,8 +1,11 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:frontend/resources/constants.dart';
 import 'package:frontend/resources/palette.dart';
 import 'package:frontend/views/screens/auth_screens/login_screen.dart';
 import 'package:frontend/views/screens/auth_screens/register_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Authentication extends StatefulWidget {
   const Authentication({Key? key}) : super(key: key);
@@ -17,8 +20,16 @@ class _AuthenticationState extends State<Authentication>
 
   @override
   void initState() {
-    _tabController = TabController(vsync: this, initialIndex: 1, length: 2);
+    _tabController = TabController(vsync: this, initialIndex: 0, length: 2);
+    checkAuth();
     super.initState();
+  }
+
+  checkAuth() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    var token =
+        (prefs.getString('token') == null) ? false : prefs.getString('token');
+    log(token.toString());
   }
 
   @override
