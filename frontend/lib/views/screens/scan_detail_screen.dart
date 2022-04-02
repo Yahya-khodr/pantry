@@ -17,8 +17,8 @@ import 'package:frontend/views/widgets/text_field_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class ItemDetailScreen extends StatefulWidget {
-  const ItemDetailScreen({
+class ScanDetailScreen extends StatefulWidget {
+  const ScanDetailScreen({
     Key? key,
     required this.barcode,
     required this.name,
@@ -31,10 +31,10 @@ class ItemDetailScreen extends StatefulWidget {
   final String image;
 
   @override
-  State<ItemDetailScreen> createState() => _ItemDetailScreenState();
+  State<ScanDetailScreen> createState() => _ScanDetailScreenState();
 }
 
-class _ItemDetailScreenState extends State<ItemDetailScreen> {
+class _ScanDetailScreenState extends State<ScanDetailScreen> {
   bool isLoading = false;
   String? _token;
   final TextEditingController _nameController = TextEditingController();
@@ -268,7 +268,7 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                   });
                   await foodViewModel.getUserToken().then((value) async {
                     await FoodService.addFood(
-                      value,
+                      value!,
                       _barcodeController.text,
                       _nameController.text,
                       _quantityController.text,
