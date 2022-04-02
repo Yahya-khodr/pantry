@@ -8,27 +8,24 @@ import 'package:frontend/services/food_service.dart';
 import 'package:frontend/utils/categories.dart';
 import 'package:frontend/utils/utilities.dart';
 import 'package:frontend/viewmodels/food_viewmodel.dart';
-import 'package:frontend/viewmodels/product_viewmodel.dart';
-import 'package:frontend/viewmodels/user_viewmodel.dart';
 import 'package:frontend/views/screens/food_detail_screen.dart';
 import 'package:frontend/views/widgets/card_item_widget.dart';
 import 'package:frontend/views/widgets/custom_appbar_widget.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-class ItemsScreen extends StatefulWidget {
-  const ItemsScreen({Key? key}) : super(key: key);
+
+class FoodsScreen extends StatefulWidget {
+  const FoodsScreen({Key? key}) : super(key: key);
 
   @override
-  State<ItemsScreen> createState() => _ItemsScreenState();
+  State<FoodsScreen> createState() => _FoodsScreenState();
 }
 
-class _ItemsScreenState extends State<ItemsScreen>
+class _FoodsScreenState extends State<FoodsScreen>
     with SingleTickerProviderStateMixin {
   String? _token;
   late TabController _tabController;
   var foodList;
-  List<Food> _foods = [];
   FoodViewModel foodViewModel = FoodViewModel();
   @override
   void initState() {
@@ -81,7 +78,7 @@ class _ItemsScreenState extends State<ItemsScreen>
                 await Future.delayed(const Duration(seconds: 1));
                 foodViewModel
                     .getUserToken()
-                    .then((value) => foodViewModel.getFoods(value));
+                    .then((value) => foodViewModel.getFoods(value!));
               },
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
