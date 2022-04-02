@@ -19,7 +19,7 @@ class FoodViewModel with ChangeNotifier {
   List<Food> get foodList => _foodList;
 
   FoodViewModel() {
-    getUserToken().then((token) => getFoods(token));
+    getUserToken().then((token) => getFoods(token!));
   }
 
   setLoading(bool loading) async {
@@ -35,7 +35,7 @@ class FoodViewModel with ChangeNotifier {
     _foodList.add(food);
   }
 
-  setToken(String token) async {
+  setToken(String? token) async {
     _token = token;
   }
 
@@ -43,13 +43,13 @@ class FoodViewModel with ChangeNotifier {
     _selectedFood = food;
   }
 
-  Future<String> getUserToken() async {
+  Future<String?> getUserToken() async {
     setLoading(true);
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    setToken(prefs.getString("token")!);
+    setToken(prefs.getString("token"));
     setLoading(false);
     notifyListeners();
-    return _token!;
+    return _token;
   }
 
   getFoods(String token) async {
