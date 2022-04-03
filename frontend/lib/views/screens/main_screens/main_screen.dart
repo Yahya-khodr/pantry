@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:frontend/models/product_model.dart';
 import 'package:frontend/viewmodels/food_viewmodel.dart';
 import 'package:frontend/viewmodels/product_viewmodel.dart';
@@ -25,7 +24,7 @@ class _MainScreenState extends State<MainScreen> {
   int index = 0;
 
   String barcode = "";
-  Product? _product;
+  // ignore: unused_field
   bool _isLoading = false;
   final screens = const <Widget>[
     // HomeScreen(),

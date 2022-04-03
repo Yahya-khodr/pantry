@@ -23,7 +23,7 @@ class CustomElevetadButton extends StatelessWidget {
             color: Colors.white,
             size: 16,
           ),
-          SizedBox(width: 5.0),
+          const SizedBox(width: 5.0),
           Text(text ?? "Edit Profile"),
         ],
       ),

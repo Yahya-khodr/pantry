@@ -1,3 +1,4 @@
+// ignore_for_file: prefer_typing_uninitialized_variables
 
 import 'dart:io';
 import 'package:flutter/material.dart';
@@ -15,7 +16,6 @@ import 'package:frontend/views/widgets/rounded_button_widget.dart';
 import 'package:frontend/views/widgets/text_field_widget.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-
 
 class ScanDetailScreen extends StatefulWidget {
   const ScanDetailScreen({
@@ -44,6 +44,7 @@ class _ScanDetailScreenState extends State<ScanDetailScreen> {
   final TextEditingController _expiryDateController = TextEditingController();
 
   File? _selectedFile;
+  // ignore: unused_field
   bool _inProcess = false;
   var foodList;
   var imageUrl;
@@ -95,8 +96,6 @@ class _ScanDetailScreenState extends State<ScanDetailScreen> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    ProductViewModel productViewModel = context.watch<ProductViewModel>();
-    UserViewModel userViewModel = context.watch<UserViewModel>();
     FoodViewModel foodViewModel = context.watch<FoodViewModel>();
 
     String? selectedCategory = "Others";
@@ -171,7 +170,6 @@ class _ScanDetailScreenState extends State<ScanDetailScreen> {
                                   ),
                                   onTap: () {
                                     _selectImage(ImageSource.camera);
-                                    print(widget.image);
                                   },
                                 ),
                               ),

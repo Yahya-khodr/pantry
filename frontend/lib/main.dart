@@ -4,9 +4,8 @@ import 'package:frontend/viewmodels/food_viewmodel.dart';
 import 'package:frontend/viewmodels/product_viewmodel.dart';
 import 'package:frontend/viewmodels/user_viewmodel.dart';
 import 'package:frontend/views/screens/auth_screens/auth_screen.dart';
-import 'package:frontend/views/screens/main_screen.dart';
+import 'package:frontend/views/screens/main_screens/main_screen.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,7 +28,6 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    final UserViewModel userViewModel = UserViewModel();
     final FoodViewModel foodViewModel = FoodViewModel();
 
     return MultiProvider(

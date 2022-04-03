@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:frontend/resources/constants.dart';
 import 'package:frontend/resources/palette.dart';
 import 'package:frontend/services/user_service.dart';
@@ -56,7 +55,6 @@ class _UpdateProfilePictureState extends State<UpdateProfilePicture> {
     setState(() {
       _token = prefs.getString("token");
     });
-    print(_token);
   }
 
   Future<void> _uploadImage() async {

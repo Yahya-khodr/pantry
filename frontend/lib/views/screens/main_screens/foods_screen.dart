@@ -1,6 +1,4 @@
-import 'dart:developer';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/models/food_model.dart';
 import 'package:frontend/resources/constants.dart';
@@ -91,7 +89,6 @@ class _FoodsScreenState extends State<FoodsScreen>
                 foodViewModel
                     .getUserToken()
                     .then((value) => foodViewModel.getFoods(value!));
-                print(foodViewModel.foodList);
               },
               child: Padding(
                 padding: const EdgeInsets.all(8.0),

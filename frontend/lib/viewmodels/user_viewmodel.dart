@@ -55,7 +55,6 @@ class UserViewModel extends ChangeNotifier {
     final pref = await SharedPreferences.getInstance();
     await pref.clear();
     _status = Status.unauthenticated;
-    print('token deleted');
     notifyListeners();
   }
 

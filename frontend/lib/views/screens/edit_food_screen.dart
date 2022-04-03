@@ -1,12 +1,9 @@
-import 'dart:developer';
+
 
 import 'package:flutter/material.dart';
 
-import 'package:frontend/models/food_model.dart';
 import 'package:frontend/resources/constants.dart';
 import 'package:frontend/resources/palette.dart';
-import 'package:frontend/services/food_service.dart';
-import 'package:frontend/utils/utilities.dart';
 import 'package:frontend/viewmodels/food_viewmodel.dart';
 import 'package:frontend/viewmodels/user_viewmodel.dart';
 import 'package:frontend/views/screens/main_screens/main_screen.dart';
@@ -14,7 +11,6 @@ import 'package:frontend/views/widgets/date_time_field.dart';
 import 'package:frontend/views/widgets/rounded_button_widget.dart';
 import 'package:frontend/views/widgets/text_field_widget.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class EditFoodScreen extends StatefulWidget {
   const EditFoodScreen({Key? key, required this.barcode}) : super(key: key);
@@ -25,6 +21,7 @@ class EditFoodScreen extends StatefulWidget {
 
 class _EditFoodScreenState extends State<EditFoodScreen> {
   bool isLoading = false;
+  // ignore: unused_field
   String? _token;
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _barcodeController = TextEditingController();
@@ -33,13 +30,12 @@ class _EditFoodScreenState extends State<EditFoodScreen> {
   final TextEditingController _purchaseDateController = TextEditingController();
   final TextEditingController _expiryDateController = TextEditingController();
 
-  final Food _food = Food();
 
+  // ignore: prefer_typing_uninitialized_variables
   var foodList;
   FoodViewModel foodViewModel = FoodViewModel();
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     Provider.of<FoodViewModel>(context, listen: false).foodList;
   }

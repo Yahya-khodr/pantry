@@ -19,6 +19,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
   User? _user;
+  // ignore: unused_field
   Profile? _profile;
   String? _token;
   bool isLoading = false;
