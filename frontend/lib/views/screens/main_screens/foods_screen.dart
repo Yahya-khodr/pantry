@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/models/food_model.dart';
+import 'package:frontend/resources/constants.dart';
 import 'package:frontend/resources/palette.dart';
 import 'package:frontend/services/food_service.dart';
 import 'package:frontend/utils/categories.dart';
@@ -11,8 +12,9 @@ import 'package:frontend/viewmodels/food_viewmodel.dart';
 import 'package:frontend/views/screens/food_detail_screen.dart';
 import 'package:frontend/views/widgets/card_item_widget.dart';
 import 'package:frontend/views/widgets/custom_appbar_widget.dart';
+import 'package:frontend/views/widgets/custom_button_widget.dart';
+import 'package:frontend/views/widgets/home_card_widget.dart';
 import 'package:provider/provider.dart';
-
 
 class FoodsScreen extends StatefulWidget {
   const FoodsScreen({Key? key}) : super(key: key);
@@ -25,15 +27,15 @@ class _FoodsScreenState extends State<FoodsScreen>
     with SingleTickerProviderStateMixin {
   String? _token;
   late TabController _tabController;
-  var foodList;
   FoodViewModel foodViewModel = FoodViewModel();
+
+  bool isGridView = true;
+
   @override
   void initState() {
     super.initState();
     _tabController = TabController(
         vsync: this, initialIndex: 0, length: categoriesList.length);
-    foodList = Provider.of<FoodViewModel>(context, listen: false).foodList;
-    foodViewModel.setFoodList(foodList);
     _tabController.addListener(() {});
   }
 
@@ -67,6 +69,16 @@ class _FoodsScreenState extends State<FoodsScreen>
                 ),
             ],
           ),
+          iconButton: IconButton(
+            icon: isGridView
+                ? const Icon(Icons.grid_on)
+                : const Icon(Icons.grid_off_rounded),
+            onPressed: () {
+              setState(() {
+                isGridView = !isGridView;
+              });
+            },
+          ),
         ),
       ),
       body: foodViewModel.loading
@@ -79,60 +91,116 @@ class _FoodsScreenState extends State<FoodsScreen>
                 foodViewModel
                     .getUserToken()
                     .then((value) => foodViewModel.getFoods(value!));
+                print(foodViewModel.foodList);
               },
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: foodViewModel.foodList.isEmpty
-                    ? const Center(
-                        child: Text("No items"),
-                      )
-                    : Consumer<FoodViewModel>(
-                        builder: (context, provider, cardItem) {
-                          return GridView.builder(
-                            gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              childAspectRatio: 0.7,
-                              crossAxisSpacing: 1.0,
-                              mainAxisSpacing: 10.0,
+                    ? Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: const [
+                                Text("No items"),
+                              ],
                             ),
-                            itemCount: foodViewModel.foodList.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              Food food = foodViewModel.foodList[index];
-                              return CardItem(
-                                onTap: () async {
-                                  foodViewModel.setSelectedFood(food);
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          const FoodDetailScreen(),
-                                    ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                CustomElevetadButton(
+                                  icon: Icons.refresh,
+                                  onPressed: () async {
+                                    await Future.delayed(
+                                        const Duration(seconds: 1));
+                                    foodViewModel.getUserToken().then((value) =>
+                                        foodViewModel.getFoods(value!));
+                                  },
+                                  text: "Refresh",
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
+                      )
+                    : isGridView
+                        ? Consumer<FoodViewModel>(
+                            builder: (context, provider, cardItem) {
+                              return GridView.builder(
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2,
+                                  childAspectRatio: 0.7,
+                                  crossAxisSpacing: 1.0,
+                                  mainAxisSpacing: 10.0,
+                                ),
+                                itemCount: foodViewModel.foodList.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  Food food = foodViewModel.foodList[index];
+                                  return CardItem(
+                                    onTap: () async {
+                                      foodViewModel.setSelectedFood(food);
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              const FoodDetailScreen(),
+                                        ),
+                                      );
+                                    },
+                                    total: food.total ?? 1,
+                                    image: NetworkImage(
+                                        Constants.imageApi + food.imageUrl!),
+                                    name: food.name ?? "No name",
+                                    qty: food.quantity ?? "No qty",
+                                    purchased: food.purchasedDate.toString(),
+                                    date: Utilities.daysBetween(DateTime.now(),
+                                            DateTime.parse(food.expiryDate!))
+                                        .toString(),
+                                    increase: () {
+                                      setState(() {
+                                        food.total = (food.total! + 1);
+                                      });
+                                    },
+                                    decrease: () async {
+                                      await FoodService.decreaseFoodQuantity(
+                                          food.id!, _token!);
+                                    },
                                   );
-                                },
-                                total: food.total ?? 1,
-                                image: const AssetImage(
-                                    "assets/images/food_image.jpg"),
-                                name: food.name ?? "No name",
-                                qty: food.quantity ?? "No qty",
-                                purchased: food.purchasedDate.toString(),
-                                date: Utilities.daysBetween(DateTime.now(),
-                                        DateTime.parse(food.expiryDate!))
-                                    .toString(),
-                                increase: () {
-                                  setState(() {
-                                    food.total = (food.total! + 1);
-                                  });
-                                },
-                                decrease: () async {
-                                  await FoodService.decreaseFoodQuantity(
-                                      food.id!, _token!);
                                 },
                               );
                             },
-                          );
-                        },
-                      ),
+                          )
+                        : SizedBox(
+                            height: size.height,
+                            child: ListView.builder(
+                              scrollDirection: Axis.vertical,
+                              shrinkWrap: true,
+                              itemCount: foodViewModel.foodList.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                Food food = foodViewModel.foodList[index];
+                                return HomeCard(
+                                  image: Constants.imageApi + food.imageUrl!,
+                                  title: food.name ?? "No name",
+                                  date: Utilities.daysBetween(DateTime.now(),
+                                          DateTime.parse(food.expiryDate!))
+                                      .toString(),
+                                  qty: food.quantity ?? "No qty",
+                                  ontap: () async {
+                                    foodViewModel.setSelectedFood(food);
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const FoodDetailScreen(),
+                                      ),
+                                    );
+                                  },
+                                );
+                              },
+                            ),
+                          ),
               ),
             ),
     );
