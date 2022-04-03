@@ -30,3 +30,12 @@ List categories = [
     "icon": FontAwesomeIcons.pizzaSlice,
   },
 ];
+
+List categoriesList = [
+  'All',
+  'Fruits & Vegetables',
+  'Drinks',
+  "Meats & Eggs",
+  "Dairy",
+  "Others"
+];
