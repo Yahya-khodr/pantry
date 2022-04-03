@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:frontend/models/food_model.dart';
@@ -17,6 +18,8 @@ class FoodViewModel with ChangeNotifier {
 
   List<Food> _foodList = [];
   List<Food> get foodList => _foodList;
+  List<Food> _foodListByCategory = [];
+  List<Food> get foodListByCategory => _foodListByCategory;
 
   FoodViewModel() {
     getUserToken().then((token) => getFoods(token!));
@@ -29,6 +32,10 @@ class FoodViewModel with ChangeNotifier {
 
   setFoodList(List<Food> foodList) {
     _foodList = foodList;
+  }
+
+  setFoodListByCategory(List<Food> foodListByCategory , String category) {
+    _foodListByCategory = foodListByCategory;
   }
 
   setFood(Food food) {
@@ -59,6 +66,13 @@ class FoodViewModel with ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> getFoodsByCategory(String token, String category) async {
+    setLoading(true);
+    _foodListByCategory = await FoodService.getFoodsByCategory(token, category);
+    setLoading(false);
+    notifyListeners();
+  }
+
   Future<bool> addFood(
     String token,
     String barcode,
@@ -67,10 +81,11 @@ class FoodViewModel with ChangeNotifier {
     String expDate,
     String purDate,
     String category,
+    File imageFile
   ) async {
     setLoading(true);
     var response = await FoodService.addFood(
-        token, barcode, expDate, purDate, name, qty, category);
+        token, barcode, expDate, purDate, name, qty, category, imageFile );
     if (response) {
       setLoading(false);
       return true;
