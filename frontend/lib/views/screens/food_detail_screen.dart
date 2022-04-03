@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/resources/constants.dart';
 import 'package:frontend/resources/palette.dart';
 import 'package:frontend/viewmodels/food_viewmodel.dart';
-import 'package:frontend/views/screens/scan_detail_screen.dart';
+import 'package:frontend/views/screens/main_screens/scan_detail_screen.dart';
 import 'package:frontend/views/widgets/custom_button_widget.dart';
 import 'package:frontend/views/widgets/custom_listtile_widget.dart';
 import 'package:provider/provider.dart';
@@ -26,6 +27,39 @@ class FoodDetailScreen extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: Column(
               children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        height: MediaQuery.of(context).size.height / 3.5,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30.0),
+                          boxShadow: const [
+                            BoxShadow(
+                              color: Colors.black26,
+                              offset: Offset(0.0, 2.0),
+                              blurRadius: 6.0,
+                            ),
+                          ],
+                        ),
+                        child: Hero(
+                          tag: Constants.imageApi +
+                              foodViewModel.selectedFood.imageUrl!,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(30.0),
+                            child: Image(
+                              image: NetworkImage(Constants.imageApi +
+                                  foodViewModel.selectedFood.imageUrl!),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
                 Row(
                   children: const <Widget>[
                     Padding(
@@ -65,6 +99,7 @@ class FoodDetailScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     CustomElevetadButton(
+                      icon: Icons.edit,
                       onPressed: () => Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (BuildContext context) {
