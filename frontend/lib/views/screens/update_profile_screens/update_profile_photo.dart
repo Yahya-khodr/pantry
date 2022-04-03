@@ -21,8 +21,8 @@ class UpdateProfilePicture extends StatefulWidget {
 
 class _UpdateProfilePictureState extends State<UpdateProfilePicture> {
   File? _selectedFile;
-  String? _res;
   bool _inProcess = false;
+  String? _token;
 
   @override
   void initState() {
@@ -54,19 +54,19 @@ class _UpdateProfilePictureState extends State<UpdateProfilePicture> {
     Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
     final SharedPreferences prefs = await _prefs;
     setState(() {
-      _res = prefs.getString("token");
+      _token = prefs.getString("token");
     });
-    print(_res);
+    print(_token);
   }
 
   Future<void> _uploadImage() async {
     if (_selectedFile != null) {
       final Future<bool> response =
-          UserService.updateProfilePicture(_selectedFile!, _res!);
+          UserService.updateProfilePicture(_selectedFile!, _token!);
       response.then(
         (value) {
           if (value) {
-            Utilities.fetchAndSaveUserInfo(res: _res!);
+            Utilities.fetchAndSaveUserInfo(res: _token!);
             Utilities.showSnackbar(
                 context, "Profile picture updated successfully", true);
             Navigator.pop(context);
