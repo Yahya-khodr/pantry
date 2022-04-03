@@ -3,7 +3,7 @@ import 'package:frontend/models/http_response.dart';
 import 'package:frontend/services/user_service.dart';
 import 'package:frontend/utils/utilities.dart';
 import 'package:frontend/utils/validators.dart';
-import 'package:frontend/views/screens/main_screen.dart';
+import 'package:frontend/views/screens/main_screens/main_screen.dart';
 import 'package:frontend/views/widgets/rounded_button_widget.dart';
 import 'package:frontend/views/widgets/text_field_widget.dart';
 
