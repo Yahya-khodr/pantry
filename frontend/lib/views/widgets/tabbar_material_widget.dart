@@ -29,11 +29,9 @@ class _TabBarMaterialWidgetState extends State<TabBarMaterialWidget> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          buildTabItem(index: 0, icon: const Icon(Icons.home_rounded)),
-          buildTabItem(index: 1, icon: const Icon(Icons.shopping_cart_rounded)),
+          buildTabItem(index: 0, icon: const Icon(Icons.grid_view_rounded)),
           placeholder,
-          buildTabItem(index: 2, icon: const Icon(Icons.grid_view_rounded)),
-          buildTabItem(index: 3, icon: const Icon(Icons.person)),
+          buildTabItem(index: 1, icon: const Icon(Icons.person)),
         ],
       ),
     );

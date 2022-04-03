@@ -66,7 +66,7 @@ class CardItem extends StatelessWidget {
                                 fontSize: 12, color: Colors.black),
                             children: <TextSpan>[
                           TextSpan(
-                            text: '$date d',
+                            text: date + 'd left',
                             style: const TextStyle(color: Palette.appBarColor),
                           )
                         ])),

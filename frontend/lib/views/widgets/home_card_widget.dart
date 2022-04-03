@@ -24,6 +24,9 @@ class HomeCard extends StatelessWidget {
       elevation: 2.0,
       child: ListTile(
         onTap: ontap,
+
+
+        
         leading: CircleAvatar(
           backgroundImage: NetworkImage(image),
         ),

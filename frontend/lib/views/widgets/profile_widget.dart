@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:frontend/resources/palette.dart';
 
 class ProfileWidget extends StatelessWidget {
-  final String imagePath;
+  // final String imagePath;
+  final Widget image;
   final bool isEdit;
   final VoidCallback onClicked;
 
   const ProfileWidget({
     Key? key,
-    required this.imagePath,
+    required this.image,
     this.isEdit = false,
     required this.onClicked,
   }) : super(key: key);
@@ -35,16 +36,19 @@ class ProfileWidget extends StatelessWidget {
   }
 
   Widget buildImage() {
-    final String image = imagePath;
-    return ClipOval(
-      child: Material(
-        color: Colors.transparent,
-        child: Image.asset(
-          image,
-          fit: BoxFit.cover,
-          width: 128,
-          height: 128,
-        ),
+    return Container(
+      decoration: const BoxDecoration(
+        shape: BoxShape.circle,
+        boxShadow: [
+          BoxShadow(
+            color: Palette.appBarColor,
+            blurRadius: 2.0,
+            spreadRadius: 5.0,
+          )
+        ],
+      ),
+      child: ClipOval(
+        child: Material(color: Colors.transparent, child: image),
       ),
     );
   }
