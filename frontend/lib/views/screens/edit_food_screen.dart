@@ -3,12 +3,13 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 
 import 'package:frontend/models/food_model.dart';
+import 'package:frontend/resources/constants.dart';
 import 'package:frontend/resources/palette.dart';
 import 'package:frontend/services/food_service.dart';
 import 'package:frontend/utils/utilities.dart';
 import 'package:frontend/viewmodels/food_viewmodel.dart';
 import 'package:frontend/viewmodels/user_viewmodel.dart';
-import 'package:frontend/views/screens/main_screen.dart';
+import 'package:frontend/views/screens/main_screens/main_screen.dart';
 import 'package:frontend/views/widgets/date_time_field.dart';
 import 'package:frontend/views/widgets/rounded_button_widget.dart';
 import 'package:frontend/views/widgets/text_field_widget.dart';
@@ -107,9 +108,8 @@ class _EditFoodScreenState extends State<EditFoodScreen> {
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(30),
                               child: Image(
-                                image: NetworkImage(foodViewModel
-                                        .selectedFood.imageUrl ??
-                                    'https://media.istockphoto.com/vectors/thumbnail-image-vector-graphic-vector-id1147544807?k=20&m=1147544807&s=612x612&w=0&h=pBhz1dkwsCMq37Udtp9sfxbjaMl27JUapoyYpQm0anc='),
+                                image: NetworkImage(Constants.imageApi +
+                                    foodViewModel.selectedFood.imageUrl!),
                                 fit: BoxFit.cover,
                               ),
                             ),
@@ -237,16 +237,16 @@ class _EditFoodScreenState extends State<EditFoodScreen> {
                     isLoading = true;
                   });
                   await foodViewModel.getUserToken().then((value) async {
-                    await FoodService.addFood(
-                      value!,
-                      
-                      _barcodeController.text,
-                      _nameController.text,
-                      _quantityController.text,
-                      Utilities.stringToDateTime(_expiryDateController.text),
-                      Utilities.stringToDateTime(_purchaseDateController.text),
-                      _typeController.text,
-                    );
+                    // await FoodService.addFood(
+                    //   value!,
+                    //   _barcodeController.text,
+                    //   _nameController.text,
+                    //   _quantityController.text,
+                    //   Utilities.stringToDateTime(_expiryDateController.text),
+                    //   Utilities.stringToDateTime(_purchaseDateController.text),
+                    //   _typeController.text,
+
+                    // );
                   });
 
                   Navigator.pushReplacement(
