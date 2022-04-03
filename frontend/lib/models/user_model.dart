@@ -1,16 +1,16 @@
 class User {
-  String uid;
-  String name;
-  String email;
-  bool isActive;
-  String token;
+  String? uid;
+  String? name;
+  String? email;
+  bool? isActive;
+  String? token;
 
   User({
-    required this.uid,
-    required this.name,
-    required this.email,
-    required this.isActive,
-    required this.token,
+     this.uid,
+     this.name,
+     this.email,
+     this.isActive,
+     this.token,
   });
 
   factory User.fromJson(Map<String, dynamic> json) {
@@ -35,7 +35,7 @@ class User {
 }
 
 class Profile {
-  final String id;
+  String? id;
   String? imageUrl;
   int? weight;
   int? height;
@@ -43,12 +43,12 @@ class Profile {
   String? gender;
 
   Profile({
-    required this.id,
-    required this.imageUrl,
-    required this.weight,
-    required this.height,
-    required this.birthDate,
-    required this.gender,
+     this.id,
+     this.imageUrl,
+     this.weight,
+     this.height,
+     this.birthDate,
+     this.gender,
   });
 
   factory Profile.fromJson(Map<String, dynamic> json) {

@@ -1,4 +1,4 @@
-import 'nutriment_model.dart';
+
 
 class Product {
   String? productName;

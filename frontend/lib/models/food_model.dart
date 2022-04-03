@@ -1,3 +1,5 @@
+import 'package:frontend/resources/constants.dart';
+
 class Food {
   int? id;
   String? barcode;
@@ -29,7 +31,7 @@ class Food {
     name = json['name'];
     quantity = json['quantity'];
     total = json['total'];
-    imageUrl = json['image'];
+    imageUrl = json['image'] ?? Constants.imageApi + "food_image.jpg";
   }
 
   Map<String, dynamic> toJson() {
