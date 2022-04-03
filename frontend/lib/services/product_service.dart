@@ -7,7 +7,7 @@ import "package:frontend/resources/constants.dart";
 import "package:http/http.dart" as http;
 
 class ProductService {
-   Future<HTTPResponse<ProductResponse>> fetchProduct(String barcode) async {
+  Future<HTTPResponse<ProductResponse>> fetchProduct(String barcode) async {
     Uri url = Uri.parse(Constants.remoteApi + barcode);
     try {
       final response = await http.get(url);
@@ -34,16 +34,30 @@ class ProductService {
     }
   }
 
-  Future<HTTPResponse<String>> addProduct(String token, Product product) async {
+  Future<HTTPResponse<String>> addProduct(
+    String token,
+    barcode,
+    productName,
+    quantity,
+    imageUrl,
+    category,
+  ) async {
     Uri url = Uri.parse(Constants.addProductUrl);
     try {
+      Map data = {
+        'barcode': barcode,
+        'product_name': productName,
+        'quantity': quantity,
+        'image_url': imageUrl,
+        'category': category,
+      };
       final response = await http.post(
         url,
         headers: {
           "Content-Type": "application/json",
           "Authorization": "Token " + token,
         },
-        body: json.encode(product.toJson()),
+        body: json.encode(data),
       );
       if (response.statusCode == 200) {
         return HTTPResponse(true, response.body, "Successfully added product",
