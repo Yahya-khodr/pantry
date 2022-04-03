@@ -9,7 +9,8 @@ from rest_framework.authtoken.models import Token
 from django.contrib.auth import authenticate
 from users.serializers import user_serializer
 from ..models import *
-from django.utils.text import  slugify
+from django.utils.text import slugify
+
 
 @api_view(['POST'])
 def login_view(request):
@@ -17,14 +18,13 @@ def login_view(request):
     email = data['email']
     password = data['password']
 
-
     try:
-        auth_user = authenticate(email=email, password = password)
+        auth_user = authenticate(email=email, password=password)
     except:
-        return Response({"error" : "Invalid Credentials"}, status=HTTP_400_BAD_REQUEST)
+        return Response({"error": "Invalid Credentials"}, status=HTTP_400_BAD_REQUEST)
 
     if auth_user and auth_user.is_active:
-        return Response({"token" : auth_user.token}, status=HTTP_200_OK)
+        return Response({"token": auth_user.token}, status=HTTP_200_OK)
     elif auth_user and not auth_user.is_active:
         return Response({"error": "Your account is suspended"}, status=HTTP_400_BAD_REQUEST)
     else:
@@ -48,11 +48,10 @@ def signup_view(request):
         user.token = token.key
         user.save()
         ProfileModel.objects.create(user=user)
-        
+
         return Response({"token": token.key}, status=HTTP_200_OK)
     except:
         return Response({"error": "User already exists"}, status=HTTP_400_BAD_REQUEST)
-
 
 
 @api_view(['GET'])
@@ -61,16 +60,17 @@ def profile_view(request):  # profile view
     user = UserModel.objects.get(id=request.user.id)
     profile = ProfileModel.objects.get(user=user)
 
-    serialized_user = user_serializer.UserModelSerializer(user, many=False).data
-    serialized_profile = user_serializer.ProfileModelSerializer(profile, many=False).data
+    serialized_user = user_serializer.UserModelSerializer(
+        user, many=False).data
+    serialized_profile = user_serializer.ProfileModelSerializer(
+        profile, many=False).data
 
     return Response({"user": serialized_user, "profile": serialized_profile}, status=HTTP_200_OK)
 
 
-
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
-def update_user(request):  
+def update_user(request):
     data = request.data
     name = data['name']
     email = data['email']
@@ -108,21 +108,21 @@ def update_profile(request):
     return Response({"message": "Profile updated successfully"}, status=HTTP_200_OK)
 
 
-@api_view(['POST'])
+@api_view(['PUT'])
 @permission_classes([IsAuthenticated])
 def update_profile_image(request):
     data = request.data
     file = data["file"]
     name = data["name"]
-    
-    image_file = ContentFile(base64.b64decode(file), name)
 
-    user= request.user
+    image_file = ContentFile(base64.b64decode(file), name)
+    user = request.user
     profile = ProfileModel.objects.get(user=user)
     profile.image = image_file
     profile.save()
-    
 
-    serialized_user_data = user_serializer.UserModelSerializer(user, many=False).data
-    serialized_profile_data = user_serializer.ProfileModelSerializer(profile, many=False).data
+    serialized_user_data = user_serializer.UserModelSerializer(
+        user, many=False).data
+    serialized_profile_data = user_serializer.ProfileModelSerializer(
+        profile, many=False).data
     return Response({"user": serialized_user_data, "profile": serialized_profile_data}, status=HTTP_200_OK)

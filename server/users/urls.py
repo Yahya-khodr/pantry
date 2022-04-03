@@ -15,7 +15,3 @@ urlpatterns = [
     path('update_profile/', user_views.update_profile),
     path('update_profile_image/', user_views.update_profile_image),
 ]
-
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL,
-                          document_root=settings.MEDIA_ROOT)
