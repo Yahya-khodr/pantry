@@ -1,8 +1,6 @@
-import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
-import 'package:frontend/models/http_response.dart';
 import 'package:frontend/models/nutriment_model.dart';
 import 'package:frontend/models/product_model.dart';
 import 'package:frontend/services/product_service.dart';
@@ -12,6 +10,8 @@ class ProductViewModel extends ChangeNotifier {
   Product? _product;
   Product? get product => _product;
 
+  String? _imageUrl;
+  String? get getImage => _imageUrl;
   Nutriments? _nutriments;
   Nutriments? get nutriments => _nutriments;
   bool _loading = false;
@@ -30,12 +30,17 @@ class ProductViewModel extends ChangeNotifier {
     _product = product;
   }
 
+  setImage(String image) {
+    _imageUrl = image;
+  }
+
   // for remote api (for the scan)
   fetchProduct(String barcode) async {
     setLoading(true);
     var response = await _productService.fetchProduct(barcode);
     if (response.isSuccessful) {
       setProduct(response.data.product!);
+      setImage(response.data.product?.imageUrl ?? "");
       // setNutriments(response.data.product?.nutriments as Nutriments);
     }
     setLoading(false);
@@ -43,24 +48,28 @@ class ProductViewModel extends ChangeNotifier {
   }
 
   // for local api (local database)
-  Future<bool> addProduct(String token, Product product) async {
+  Future<bool> addProduct(
+      String token, barcode, productName, qty, category, imageUrl) async {
     setLoading(true);
-    var resposne = await _productService.addProduct(token, product);
+    var resposne = await _productService.addProduct(
+        token, barcode, productName, qty, category, imageUrl);
     if (resposne.isSuccessful) {
-      setProduct(product);
       return true;
     } else {
       return false;
     }
   }
 
-  Future<void> getProduct(String barcode) async {
+  Future<Product?> getProduct(String barcode) async {
     setLoading(true);
     final response = await _productService.getProduct(barcode);
     if (response.isSuccessful) {
       log(response.message);
-    } else {
-      log(response.message);
+      return response.data;
     }
+    setLoading(false);
+    log(response.message);
+    notifyListeners();
+    return null;
   }
 }
