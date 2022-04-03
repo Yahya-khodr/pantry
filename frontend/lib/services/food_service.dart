@@ -10,8 +10,13 @@ import "package:http/http.dart" as http;
 
 class FoodService with ChangeNotifier {
   static Future<bool> addFood(String token, String barcode, String name,
-      String qty, String expDate, String purDate, String category) async {
+      String qty, String expDate, String purDate, String category, File imageFile) async {
     Uri url = Uri.parse(Constants.addFoodUrl);
+     String base64file = base64Encode(imageFile.readAsBytesSync());
+    String fileName = imageFile.path.split("/").last;
+    Map headerData = {};
+    headerData['image_name'] = fileName;
+    headerData['file'] = base64file;
     try {
       final response = await http.post(
         url,
@@ -26,15 +31,16 @@ class FoodService with ChangeNotifier {
           "expiry_date": expDate,
           "purchased_date": purDate,
           "category": category,
+          "image_name" : fileName,
+          "file" : base64file,
+
         }),
       );
 
       if (response.statusCode == 200) {
         return true;
-        
       } else {
         return false;
-        
       }
     } catch (e) {
       log(e.toString());
@@ -55,29 +61,22 @@ class FoodService with ChangeNotifier {
     }
   }
 
-  static Future<HTTPResponse<List<Food>>> getFoodsByCategory(
-      String category) async {
+  static Future<List<Food>> getFoodsByCategory(
+      String token, String category) async {
     Uri url = Uri.parse(Constants.getFoodByCategoryUrl + category + '/');
-    try {
-      final response =
-          await http.get(url, headers: {"Accept": "application/json"});
-      if (response.statusCode == 200) {
-        List<Food> foods = [];
-        foods = (json.decode(response.body) as List)
-            .map((data) => Food.fromJson(data))
-            .toList();
-        return HTTPResponse(
-            true, foods, "Fetched successfully", response.statusCode);
-      } else {
-        return HTTPResponse(
-            false, [], "Failed to get foods", response.statusCode);
-      }
-    } on SocketException {
-      return HTTPResponse(false, [], "No Internet Connection", 400);
-    } on FormatException {
-      return HTTPResponse(false, [], "Invalid Response", 400);
-    } catch (e) {
-      return HTTPResponse(false, [], "Error Occurred", 400);
+
+    final response = await http.get(
+      url,
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Token " + token,
+      },
+    );
+    if (response.statusCode == 200) {
+      List jsonResponse = json.decode(response.body);
+      return jsonResponse.map((data) => Food.fromJson(data)).toList();
+    } else {
+      throw Exception('Failed to load items');
     }
   }
 
@@ -107,10 +106,9 @@ class FoodService with ChangeNotifier {
     }
   }
 
-   static Future<HTTPResponse<String>> increaseFoodQuantity(
+  static Future<HTTPResponse<String>> increaseFoodQuantity(
       int id, String token) async {
-    Uri url =
-        Uri.parse(Constants.increaseFood + id.toString() + '/');
+    Uri url = Uri.parse(Constants.increaseFood + id.toString() + '/');
     try {
       final response = await http.put(
         url,
@@ -123,8 +121,8 @@ class FoodService with ChangeNotifier {
         return HTTPResponse(
             true, "Food Updated", "Food Updated", response.statusCode);
       } else {
-        return HTTPResponse(false, "Failed to Food Cart",
-            "Failed to Food Food", response.statusCode);
+        return HTTPResponse(false, "Failed to Food Cart", "Failed to Food Food",
+            response.statusCode);
       }
     } on SocketException {
       return HTTPResponse(false, "", "No Internet Connection", 400);
@@ -137,8 +135,7 @@ class FoodService with ChangeNotifier {
 
   static Future<HTTPResponse<String>> decreaseFoodQuantity(
       int id, String token) async {
-    Uri url =
-        Uri.parse(Constants.decreaseFood + id.toString() + '/');
+    Uri url = Uri.parse(Constants.decreaseFood + id.toString() + '/');
     try {
       final response = await http.put(
         url,
