@@ -1,5 +1,6 @@
 
-
+from django.core.files.base import ContentFile
+import base64
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
@@ -94,6 +95,96 @@ def remove_item(request, item_id):
     try:
         item = ItemModel.objects.get(id=item_id)
         item.delete()
+        return Response(status=status.HTTP_200_OK)
+    except:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+
+@api_view(["POST"])
+@permission_classes([IsAuthenticated])
+def add_food(request):
+    try:
+        data = request.data
+        user = UserModel.objects.get(id=request.user.id)
+        cat_name = request.data["category"]
+        file = data["file"]
+        name = data["image_name"]
+        image_file = ContentFile(base64.b64decode(file), name)
+        category = CategoryModel.objects.get_or_create(cat_name=cat_name)
+        form_data = {
+            **data, "user": user.id, "category": category[0].id, "image" : image_file
+        }
+        data = form_data
+        serializer = FoodSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors)
+    except Exception as ex:
+        raise ex
+
+
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def get_foods(request):
+    try:
+        user = UserModel.objects.get(id=request.user.id)
+        items = Food.objects.filter(user=user)
+        serializer = FoodSerializer(items, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    # except:
+    #     return Response(status=status.HTTP_404_NOT_FOUND)
+    except Exception as ex:
+        raise ex
+
+
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def get_foods_by_category(request, category):
+    food = Food.objects.filter(
+        category__cat_name=category
+    )
+    serializer = FoodSerializer(food, many=True)
+    return Response(serializer.data)
+
+
+@api_view(["POST"])
+@permission_classes([IsAuthenticated])
+def remove_food(request, food_id):
+    try:
+        food = Food.objects.get(id=food_id)
+        food.delete()
+        return Response(status=status.HTTP_200_OK)
+    # except:
+    #     return Response(status=status.HTTP_404_NOT_FOUND)
+    except Exception as ex:
+        raise ex
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def increase_quantity(request, food_id):
+    try:
+        food = Food.objects.get(id=food_id)
+        food.total += 1
+        food.quantity = food.total * int(food.quantity)
+        food.save()
+        return Response(status=status.HTTP_200_OK)
+    except:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def decrease_quantity(request, food_id):
+    try:
+        food = Food.objects.get(id=food_id)
+        food.total -= 1
+        food.quantity = food.total * int(food.quantity)
+        food.save()
+
+        if food.total <= 0:
+            food.delete()
         return Response(status=status.HTTP_200_OK)
     except:
         return Response(status=status.HTTP_404_NOT_FOUND)
