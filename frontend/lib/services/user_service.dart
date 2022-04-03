@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:io' as io;
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
@@ -79,7 +80,6 @@ class UserService with ChangeNotifier {
       },
     );
     if (response.statusCode == 200) {
-     
       userData = json.decode(response.body);
       User user = User.fromJson(userData['user']);
       Profile profile = Profile.fromJson(userData['profile']);
@@ -89,6 +89,28 @@ class UserService with ChangeNotifier {
     }
   }
 
+  static Future<bool> updateProfilePicture(File imageFile, String token) async {
+    Uri url = Uri.parse(Constants.updateProfileImageUrl);
+    String base64file = base64Encode(imageFile.readAsBytesSync());
+    String fileName = imageFile.path.split("/").last;
+    Map headerData = {};
+    headerData['name'] = fileName;
+    headerData['file'] = base64file;
+
+    http.Response response = await http.put(
+      url,
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Token " + token,
+      },
+      body: json.encode(headerData),
+    );
+
+    if (response.statusCode == 200) {
+     
+      return true;
+    } else {
+      return false;
+    }
+  }
 }
-
-
