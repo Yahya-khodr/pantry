@@ -6,12 +6,14 @@ class RoundedButton extends StatelessWidget {
   final VoidCallback onPressed;
   final Color color, textColor;
   final double? width;
+  final IconData? icon;
 
   const RoundedButton({
     Key? key,
     required this.text,
     required this.onPressed,
     this.width,
+    this.icon,
     this.color = Palette.buttonColor,
     this.textColor = Colors.white,
   }) : super(key: key);
@@ -30,9 +32,20 @@ class RoundedButton extends StatelessWidget {
 
   Widget newElevatedButton() {
     return ElevatedButton(
-      child: Text(
-        text.toUpperCase(),
-        style: TextStyle(color: textColor, fontSize: 16.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            icon,
+            color: Colors.white,
+            size: 24,
+          ),
+          const SizedBox(width: 5.0),
+          Text(
+            text.toUpperCase(),
+            style: TextStyle(color: textColor, fontSize: 16.0),
+          ),
+        ],
       ),
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(

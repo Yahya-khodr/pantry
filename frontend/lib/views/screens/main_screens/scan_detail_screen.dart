@@ -315,44 +315,34 @@ class _ScanDetailScreenState extends State<ScanDetailScreen> {
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Expanded(
-              flex: 2,
-              child: RoundedButton(
-                text: "Cancel",
-                color: Palette.buttonColorRed,
-                width: size.width,
-                onPressed: () => Navigator.pop(context),
-              ),
-            ),
-            Expanded(
-              flex: 3,
-              child: RoundedButton(
-                text: "Save",
-                width: size.width,
-                onPressed: () async {
-                  setState(() {
-                    isLoading = true;
-                  });
-                  await foodViewModel.getUserToken().then((value) async {
-                    await FoodService.addFood(
-                      value!,
-                      _barcodeController.text,
-                      _nameController.text,
-                      _quantityController.text,
-                      Utilities.stringToDateTime(_expiryDateController.text),
-                      Utilities.stringToDateTime(_purchaseDateController.text),
-                      _typeController.text,
-                      _selectedFile!,
-                    );
-                  });
+            RoundedButton(
+              icon: Icons.check,
+              text: "Add Item",
+              width: size.width / 2,
+              onPressed: () async {
+                setState(() {
+                  isLoading = true;
+                });
+                await foodViewModel.getUserToken().then((value) async {
+                  await FoodService.addFood(
+                    value!,
+                    _barcodeController.text,
+                    _nameController.text,
+                    _quantityController.text,
+                    Utilities.stringToDateTime(_expiryDateController.text),
+                    Utilities.stringToDateTime(_purchaseDateController.text),
+                    _typeController.text,
+                    _selectedFile!,
+                  );
+                });
 
-                  Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const MainScreen()));
-                },
-              ),
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const MainScreen()));
+              },
             ),
           ],
         ),
