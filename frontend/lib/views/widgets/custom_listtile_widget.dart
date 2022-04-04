@@ -25,7 +25,10 @@ class CustomTile extends StatelessWidget {
         child: ListTile(
           leading: Text(
             title,
-            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
+            style: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w400,
+                color: Palette.TextColor),
           ),
           trailing: Padding(
             padding: EdgeInsets.only(

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:frontend/models/food_model.dart';
 import 'package:frontend/resources/constants.dart';
