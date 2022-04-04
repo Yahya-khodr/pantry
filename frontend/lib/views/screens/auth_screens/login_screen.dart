@@ -92,8 +92,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: size.height * 0.03,
                   ),
                   RoundedButton(
+                      width: size.width / 2,
                       text: "Login",
-                      width: size.width / 3,
                       onPressed: () {
                         setState(() {
                           _email = _emailController.text;

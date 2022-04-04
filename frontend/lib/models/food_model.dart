@@ -31,7 +31,7 @@ class Food {
     name = json['name'];
     quantity = json['quantity'];
     total = json['total'];
-    imageUrl = json['image'] ?? Constants.imageApi + "food_image.jpg";
+    imageUrl = json['image'] ;
   }
 
   Map<String, dynamic> toJson() {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/resources/palette.dart';
+import 'package:frontend/services/notification_service.dart';
 import 'package:frontend/viewmodels/food_viewmodel.dart';
 import 'package:frontend/viewmodels/product_viewmodel.dart';
 import 'package:frontend/viewmodels/user_viewmodel.dart';
@@ -21,10 +22,19 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  @override
-  void initState() {
-    super.initState();
+  // @override
+  // void initState() {
+  //   NotificationService.init();
+  //   listenNotifications();
+  //   super.initState();
+  // }
+
+  void listenNotifications() {
+    NotificationService.onNotifications.stream.listen(onClickedNotification);
   }
+
+  void onClickedNotification(String? payload) => Navigator.of(context)
+      .push(MaterialPageRoute(builder: (context) => const MainScreen()));
 
   @override
   Widget build(BuildContext context) {

@@ -3,7 +3,7 @@ import 'package:rxdart/rxdart.dart';
 
 class NotificationService {
   static final _notifications = FlutterLocalNotificationsPlugin();
-  static final onNotification = BehaviorSubject<String?>();
+  static final onNotifications = BehaviorSubject<String?>();
 
   static Future _notificationDetails() async {
     return const NotificationDetails(
@@ -20,7 +20,7 @@ class NotificationService {
     await _notifications.initialize(
       settings,
       onSelectNotification: (payload) async {
-        onNotification.add(payload);
+        onNotifications.add(payload);
       },
     );
   }

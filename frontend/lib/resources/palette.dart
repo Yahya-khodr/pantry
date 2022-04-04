@@ -10,4 +10,5 @@ class Palette {
   static const Color textFieldColor = Color(0xFFFFFFFF);
   static const Color buttonColor = Color(0xFF00af54);
   static const Color buttonColorRed = Colors.red;
+  static const Color TextColor = Color(0xFF767676);
 }

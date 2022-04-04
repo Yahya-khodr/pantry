@@ -49,7 +49,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Container(
-                              height: MediaQuery.of(context).size.height / 3.5,
+                              height: MediaQuery.of(context).size.height / 4,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(30.0),
                                 boxShadow: const [
