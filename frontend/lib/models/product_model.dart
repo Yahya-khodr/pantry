@@ -1,11 +1,13 @@
 
 
+import 'package:frontend/models/nutriment_model.dart';
+
 class Product {
   String? productName;
   String? quantity;
   String? productQuantity;
   String? imageUrl;
-  // Nutriments? nutriments;
+  Nutriments? nutriments;
   String? barcode;
   String? category;
 
@@ -13,7 +15,7 @@ class Product {
     this.productName,
     this.quantity,
     this.productQuantity,
-    // this.nutriments,
+    this.nutriments,
     this.imageUrl,
     this.category,
     this.barcode,
@@ -27,9 +29,9 @@ class Product {
       productQuantity: json['product_quantity'],
       imageUrl: json['image_url'],
       category: json['category'],
-      // nutriments: json['nutriments'] = Nutriments.fromJson(
-      //   json['nutriments'],
-      // ),
+      nutriments: json['nutriments'] = Nutriments.fromJson(
+        json['nutriments'],
+      ),
     );
   }
   Map<String, dynamic> toJson() {
@@ -39,7 +41,7 @@ class Product {
       'quantity': quantity,
       'product_quantity': productQuantity,
       'image_url': imageUrl,
-      // 'nutriments': nutriments,
+      'nutriments': nutriments,
       'category': category,
     };
   }

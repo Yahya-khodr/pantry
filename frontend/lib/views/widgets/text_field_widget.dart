@@ -4,7 +4,7 @@ import 'package:frontend/resources/palette.dart';
 class CustomTextField extends StatefulWidget {
   final String? labelText;
   final String? hintText;
-  
+
   final TextEditingController controller;
   final TextInputType? keyboardType;
   final String? suffixText;
@@ -24,7 +24,6 @@ class CustomTextField extends StatefulWidget {
     this.prefixIcon,
     this.keyboardType,
     required this.controller,
-    
   }) : super(key: key);
 
   @override

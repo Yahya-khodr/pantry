@@ -76,6 +76,7 @@ class _MainScreenState extends State<MainScreen> {
                   qty: productViewModel.product?.quantity ??
                       productViewModel.product?.productQuantity ??
                       "",
+                  nutriments: productViewModel.product?.nutriments,
                 ),
               ),
             );

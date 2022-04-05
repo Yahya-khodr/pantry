@@ -25,6 +25,7 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
   @override
   Widget build(BuildContext context) {
     FoodViewModel foodViewModel = context.watch<FoodViewModel>();
+    FoodViewModel productViewModel = context.watch<FoodViewModel>();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Palette.appBarColor,
@@ -119,21 +120,23 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                           children: <Widget>[
                             RoundedButton(
                               width: 200,
-                              onPressed: () => Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (BuildContext context) {
-                                    return ScanDetailScreen(
-                                      barcode:
-                                          foodViewModel.selectedFood.barcode!,
-                                      image:
-                                          foodViewModel.selectedFood.imageUrl ??
-                                              "",
-                                      qty: foodViewModel.selectedFood.quantity!,
-                                      name: foodViewModel.selectedFood.name!,
-                                    );
-                                  },
-                                ),
-                              ),
+                              // onPressed: () => Navigator.of(context).push(
+                              //   MaterialPageRoute(
+                              //     builder: (BuildContext context) {
+                              //       return ScanDetailScreen(
+                              //         barcode:
+                              //             foodViewModel.selectedFood.barcode!,
+                              //         image:
+                              //             foodViewModel.selectedFood.imageUrl ??
+                              //                 "",
+                              //         qty: foodViewModel.selectedFood.quantity!,
+                              //         name: foodViewModel.selectedFood.name!,
+                                      
+                              //       );
+                              //     },
+                              //   ),
+                              // ),
+                              onPressed: (){},
                               icon: Icons.edit,
                               text: 'Edit Item',
                             ),

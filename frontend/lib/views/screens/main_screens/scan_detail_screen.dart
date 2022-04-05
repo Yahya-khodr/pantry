@@ -2,6 +2,8 @@
 
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:frontend/models/nutriment_model.dart';
+import 'package:frontend/models/product_model.dart';
 import 'package:frontend/resources/palette.dart';
 import 'package:frontend/services/food_service.dart';
 import 'package:frontend/utils/categories.dart';
@@ -11,6 +13,7 @@ import 'package:frontend/viewmodels/food_viewmodel.dart';
 import 'package:frontend/viewmodels/product_viewmodel.dart';
 import 'package:frontend/viewmodels/user_viewmodel.dart';
 import 'package:frontend/views/screens/main_screens/main_screen.dart';
+import 'package:frontend/views/widgets/custom_text_input_widget.dart';
 import 'package:frontend/views/widgets/date_time_field.dart';
 import 'package:frontend/views/widgets/rounded_button_widget.dart';
 import 'package:frontend/views/widgets/text_field_widget.dart';
@@ -18,17 +21,19 @@ import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 class ScanDetailScreen extends StatefulWidget {
-  const ScanDetailScreen({
+  ScanDetailScreen({
     Key? key,
     required this.barcode,
     required this.name,
     required this.qty,
     required this.image,
+    this.nutriments,
   }) : super(key: key);
   final String barcode;
   final String name;
   final String qty;
   final String image;
+  Nutriments? nutriments;
 
   @override
   State<ScanDetailScreen> createState() => _ScanDetailScreenState();
@@ -42,7 +47,14 @@ class _ScanDetailScreenState extends State<ScanDetailScreen> {
   final TextEditingController _quantityController = TextEditingController();
   final TextEditingController _purchaseDateController = TextEditingController();
   final TextEditingController _expiryDateController = TextEditingController();
-
+  final TextEditingController _fatController = TextEditingController();
+  final TextEditingController _proteinsController = TextEditingController();
+  final TextEditingController _sodiumController = TextEditingController();
+  final TextEditingController _sugarController = TextEditingController();
+  final TextEditingController _fiberController = TextEditingController();
+  final TextEditingController _saturatedFatController = TextEditingController();
+  final TextEditingController _saltController = TextEditingController();
+  Product? _product;
   File? _selectedFile;
   // ignore: unused_field
   bool _inProcess = false;
@@ -50,6 +62,7 @@ class _ScanDetailScreenState extends State<ScanDetailScreen> {
   var imageUrl;
   FoodViewModel foodViewModel = FoodViewModel();
   ProductViewModel productViewModel = ProductViewModel();
+
   @override
   void initState() {
     super.initState();
@@ -58,7 +71,7 @@ class _ScanDetailScreenState extends State<ScanDetailScreen> {
     _barcodeController.text = widget.barcode;
   }
 
-  void initializeData() {
+  void initializeData() async {
     _nameController.value = _nameController.value.copyWith(
       text: widget.name,
       selection: widget.name != null
@@ -70,6 +83,27 @@ class _ScanDetailScreenState extends State<ScanDetailScreen> {
       selection: widget.qty != null
           ? TextSelection.collapsed(offset: widget.qty.length)
           : null,
+    );
+    _fatController.value = _fatController.value.copyWith(
+      text: widget.nutriments?.fat.toString(),
+    );
+    _proteinsController.value = _proteinsController.value.copyWith(
+      text: widget.nutriments?.proteins.toString(),
+    );
+    _sodiumController.value = _sodiumController.value.copyWith(
+      text: widget.nutriments?.sodium.toString(),
+    );
+    _sugarController.value = _sugarController.value.copyWith(
+      text: widget.nutriments?.sugars.toString(),
+    );
+    _fiberController.value = _fiberController.value.copyWith(
+      text: widget.nutriments?.fiber.toString(),
+    );
+    _saturatedFatController.value = _saturatedFatController.value.copyWith(
+      text: widget.nutriments?.saturatedFat.toString(),
+    );
+    _saltController.value = _saltController.value.copyWith(
+      text: widget.nutriments?.salt.toString(),
     );
   }
 
@@ -97,6 +131,7 @@ class _ScanDetailScreenState extends State<ScanDetailScreen> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     FoodViewModel foodViewModel = context.watch<FoodViewModel>();
+    ProductViewModel productViewModel = context.watch<ProductViewModel>();
 
     String? selectedCategory = "Others";
     return Scaffold(
@@ -111,7 +146,7 @@ class _ScanDetailScreenState extends State<ScanDetailScreen> {
                   ),
                 ),
             icon: const Icon(Icons.arrow_back_ios)),
-        title: const Text("Add item"),
+        title: const Text("Add Item"),
       ),
       body: isLoading
           ? const Center(
@@ -189,10 +224,13 @@ class _ScanDetailScreenState extends State<ScanDetailScreen> {
                                     TextField(
                                       controller: _nameController,
                                       decoration: const InputDecoration(
+                                        labelText: "Product Name",
                                         hintText: 'product name',
                                       ),
                                     ),
                                     TextField(
+                                      decoration: const InputDecoration(
+                                          labelText: "Barcode"),
                                       enabled: false,
                                       controller: _barcodeController,
                                     ),
@@ -302,6 +340,115 @@ class _ScanDetailScreenState extends State<ScanDetailScreen> {
                                     "Expiry date:",
                                   ),
                                 ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    ExpansionTile(
+                      initiallyExpanded: true,
+                      textColor: Palette.appBarColor,
+                      iconColor: Palette.appBarColor,
+                      title: const Text(
+                        "Nutriments",
+                      ),
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 14.0, vertical: 10.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Expanded(
+                                    child: CustomTextInput(
+                                        labelText: "Carbohydrates",
+                                        controller: _fatController,
+                                        keyboardType: TextInputType.number,
+                                        suffixText: 'g'),
+                                  ),
+                                  Expanded(
+                                    child: CustomTextInput(
+                                        labelText: "Energy",
+                                        controller: _proteinsController,
+                                        keyboardType: TextInputType.number,
+                                        suffixText: 'kcal'),
+                                  ),
+                                  Expanded(
+                                    child: CustomTextInput(
+                                        labelText: "Salt",
+                                        controller: _saltController,
+                                        keyboardType: TextInputType.number,
+                                        suffixText: 'g'),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Expanded(
+                                    child: CustomTextInput(
+                                        labelText: "Fat",
+                                        controller: _fatController,
+                                        keyboardType: TextInputType.number,
+                                        suffixText: 'g'),
+                                  ),
+                                  Expanded(
+                                    child: CustomTextInput(
+                                        labelText: "Proteins",
+                                        controller: _proteinsController,
+                                        keyboardType: TextInputType.number,
+                                        suffixText: 'g'),
+                                  ),
+                                  Expanded(
+                                    child: CustomTextInput(
+                                        labelText: "Sodium",
+                                        controller: _sodiumController,
+                                        keyboardType: TextInputType.number,
+                                        suffixText: 'g'),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Expanded(
+                                    child: CustomTextInput(
+                                        labelText: "Sugar",
+                                        controller: _sugarController,
+                                        keyboardType: TextInputType.number,
+                                        suffixText: 'g'),
+                                  ),
+                                  Expanded(
+                                    child: CustomTextInput(
+                                        labelText: "Fiber",
+                                        controller: _fiberController,
+                                        keyboardType: TextInputType.number,
+                                        suffixText: 'g'),
+                                  ),
+                                  Expanded(
+                                    child: CustomTextInput(
+                                        labelText: "SaturatedFat",
+                                        controller: _saturatedFatController,
+                                        keyboardType: TextInputType.number,
+                                        suffixText: 'g'),
+                                  ),
+                                ],
                               ),
                             ],
                           ),

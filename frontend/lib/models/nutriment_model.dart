@@ -1,4 +1,6 @@
 class Nutriments {
+  int? carbohydrates;
+  int? energy;
   int? fat;
   int? proteins;
   int? salt;
@@ -6,8 +8,11 @@ class Nutriments {
   int? sugars;
   int? fiber;
   int? saturatedFat;
+  
 
   Nutriments({
+    this.carbohydrates,
+    this.energy,
     this.fat,
     this.proteins,
     this.salt,
@@ -18,6 +23,8 @@ class Nutriments {
   });
   factory Nutriments.fromJson(Map<String, dynamic> json) {
     return Nutriments(
+      carbohydrates: json['carbohydrates'],
+      energy: json['energy'],
       fat: json['fat'],
       proteins: json['proteins'],
       salt: json['salt'],
@@ -30,6 +37,8 @@ class Nutriments {
 
   Map<String, dynamic> toJson() {
     return {
+      'carbohydrates' : carbohydrates,
+      'energy' : energy,
       'fat': fat,
       'proteins': proteins,
       'salt': salt,
