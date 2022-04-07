@@ -6,11 +6,13 @@ import 'package:frontend/viewmodels/product_viewmodel.dart';
 import 'package:frontend/viewmodels/user_viewmodel.dart';
 import 'package:frontend/views/screens/auth_screens/auth_screen.dart';
 import 'package:frontend/views/screens/main_screens/main_screen.dart';
+import 'package:frontend/views/screens/main_screens/search_screen.dart';
 import 'package:provider/provider.dart';
+import 'package:timezone/timezone.dart' as tz;
+import 'package:timezone/data/latest.dart' as tz;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   runApp(const MyApp());
 }
 
@@ -22,19 +24,27 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  // @override
-  // void initState() {
-  //   NotificationService.init();
-  //   listenNotifications();
-  //   super.initState();
-  // }
+  @override
+  void initState() {
+    NotificationService.init(initScheduled: true);
+    listenNotification();
+    tz.initializeTimeZones();
+    super.initState();
 
-  void listenNotifications() {
-    NotificationService.onNotifications.stream.listen(onClickedNotification);
+    NotificationService.showScheduledNotification(
+        title: 'Alert',
+        body: 'Some products are expiring soon check them !',
+        payLoad: 'daily alerts',
+        scheduledDate: DateTime.now().add(const Duration(seconds: 15)));
   }
 
-  void onClickedNotification(String? payload) => Navigator.of(context)
-      .push(MaterialPageRoute(builder: (context) => const MainScreen()));
+  void listenNotification() => NotificationService.onNotifications.stream
+      .listen((value) => {onClickedNotify});
+
+  void onClickedNotify(String? payload) {
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => const MainScreen()));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,6 +62,9 @@ class _MyAppState extends State<MyApp> {
           theme: ThemeData(
               primarySwatch: Colors.blue,
               scaffoldBackgroundColor: Palette.backgroundColor),
+          routes: {
+            '/search_screen': (context) => const SearchScreen(),
+          },
           home: FutureBuilder<String?>(
             future: foodViewModel.getUserToken(),
             builder: (BuildContext context, AsyncSnapshot<String?> snapshot) {
