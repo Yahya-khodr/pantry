@@ -21,16 +21,17 @@ class Constants {
     
   static String addFoodUrl = api + "add_food/";
   static String getFoodsUrl = api + "get_foods/";
+  static String getRecentFoodsUrl = api + "get_recend_foods/";
+  static String getExpiredFoodsUrl = api + "get_expired_foods/";
   static String getFoodByCategoryUrl = api + "get_food_by_category/"; // takes category as parameter
   static String removeFoodUrl = api + "remove_food/"; // takes food Id as parameter
   static String increaseFood = api + "increase_quantity/";
   static String decreaseFood = api + "decrease_quantity/";
       
 
-  static String addItemUrl = api + "add_item/";
-  static String getItemsUrl = api + "get_items/";
-  static String removeItemUrl =
-      api + "remove_item/"; // takes item id as parameter
+  static String addShopItem = api + "create_item/";
+  static String getShopItems = api + "items/";
+  static String deleteShopItem = api + "delete_item/";
 
   static String remoteApi = "https://world.openfoodfacts.org/api/v0/product/";
 }
