@@ -9,10 +9,17 @@ import 'package:frontend/resources/constants.dart';
 import "package:http/http.dart" as http;
 
 class FoodService with ChangeNotifier {
-  static Future<bool> addFood(String token, String barcode, String name,
-      String qty, String expDate, String purDate, String category, File imageFile) async {
+  static Future<bool> addFood(
+      String token,
+      String barcode,
+      String name,
+      String qty,
+      String expDate,
+      String purDate,
+      String category,
+      File imageFile) async {
     Uri url = Uri.parse(Constants.addFoodUrl);
-     String base64file = base64Encode(imageFile.readAsBytesSync());
+    String base64file = base64Encode(imageFile.readAsBytesSync());
     String fileName = imageFile.path.split("/").last;
     Map headerData = {};
     headerData['image_name'] = fileName;
@@ -31,9 +38,8 @@ class FoodService with ChangeNotifier {
           "expiry_date": expDate,
           "purchased_date": purDate,
           "category": category,
-          "image_name" : fileName,
-          "file" : base64file,
-
+          "image_name": fileName,
+          "file": base64file,
         }),
       );
 
@@ -50,6 +56,32 @@ class FoodService with ChangeNotifier {
 
   static Future<List<Food>> getFoods(String token) async {
     Uri url = Uri.parse(Constants.getFoodsUrl);
+    final response = await http.get(url, headers: {
+      "Content-Type": "application/json",
+      "Authorization": "Token " + token,
+    });
+    if (response.statusCode == 200) {
+      List jsonResponse = json.decode(response.body);
+      return jsonResponse.map((data) => Food.fromJson(data)).toList();
+    } else {
+      throw Exception('Failed to load items');
+    }
+  }
+
+  static Future<List<Food>> getRecentFoods(String token) async {
+    Uri url = Uri.parse(Constants.getRecentFoodsUrl);
+    final response = await http.get(url, headers: {
+      "Authorization": "Token " + token,
+    });
+    if (response.statusCode == 200) {
+      List jsonResponse = json.decode(response.body);
+      return jsonResponse.map((data) => Food.fromJson(data)).toList();
+    } else {
+      throw Exception('Failed to load items');
+    }
+  }
+  static Future<List<Food>> getExpiredFoods(String token) async {
+    Uri url = Uri.parse(Constants.getExpiredFoodsUrl);
     final response = await http.get(url, headers: {
       "Authorization": "Token " + token,
     });
