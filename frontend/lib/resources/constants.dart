@@ -17,17 +17,16 @@ class Constants {
   static String getProductByCategory =
       api + "product_by_category/"; // takes category as parameter
 
-
-    
   static String addFoodUrl = api + "add_food/";
   static String getFoodsUrl = api + "get_foods/";
   static String getRecentFoodsUrl = api + "get_recend_foods/";
   static String getExpiredFoodsUrl = api + "get_expired_foods/";
-  static String getFoodByCategoryUrl = api + "get_food_by_category/"; // takes category as parameter
-  static String removeFoodUrl = api + "remove_food/"; // takes food Id as parameter
+  static String getFoodByCategoryUrl =
+      api + "get_food_by_category/"; // takes category as parameter
+  static String removeFoodUrl =
+      api + "remove_food/"; // takes food Id as parameter
   static String increaseFood = api + "increase_quantity/";
   static String decreaseFood = api + "decrease_quantity/";
-      
 
   static String addShopItem = api + "create_item/";
   static String getShopItems = api + "items/";
