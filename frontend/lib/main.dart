@@ -63,7 +63,7 @@ class _MyAppState extends State<MyApp> {
               primarySwatch: Colors.blue,
               scaffoldBackgroundColor: Palette.backgroundColor),
           routes: {
-            '/search_screen': (context) => const SearchScreen(),
+            '/search_screen': (context) => SearchScreen(),
           },
           home: FutureBuilder<String?>(
             future: foodViewModel.getUserToken(),
