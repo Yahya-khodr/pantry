@@ -40,10 +40,22 @@ class Food(models.Model):
     name = models.CharField(max_length=255)
     quantity = models.TextField(default=0)
     image = models.ImageField(null=True, blank=True)
-    imageUrl = models.CharField(max_length=255, blank=True)
     total = models.IntegerField(default=1)
     category = models.ForeignKey(CategoryModel, models.CASCADE)
     expiry_date = models.DateField()
     purchased_date = models.DateField()
     created_date = models.DateField(auto_now_add=True)
     update_date = models.DateField(auto_now=True)
+
+
+class Nutriment(models.Model):
+    food = models.OneToOneField(Food, on_delete=models.CASCADE)
+    fat = models.IntegerField()
+    carbohydrates = models.IntegerField()
+    energy = models.IntegerField()
+    fat = models.IntegerField()
+    proteins = models.IntegerField()
+    saturatedFat = models.IntegerField()
+    sugars = models.IntegerField()
+    sodium = models.IntegerField()
+    salt = models.IntegerField()

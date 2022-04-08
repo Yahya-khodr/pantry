@@ -10,14 +10,11 @@ urlpatterns = [
     path('product_by_category/<str:category>/',
          product_views.get_product_by_category),
 
-    # item endpoints
-    path('add_item/', product_views.add_item),
-    path('get_items/', product_views.get_items),
-    path('remove_item/<str:item_id>/', product_views.remove_item),
-
 
     path('add_food/', product_views.add_food),
     path('get_foods/', product_views.get_foods),
+    path('get_recend_foods/', product_views.get_recend_foods),
+    path('get_expired_foods/', product_views.get_expired_foods),
     path('get_food_by_category/<str:category>/',
          product_views.get_foods_by_category),
     path('remove_food/<str:food_id>/', product_views.remove_food),
