@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     "corsheaders",
 
+    'shop.apps.ShopConfig',
     'product.apps.ProductConfig',
     'users.apps.UsersConfig',
 
