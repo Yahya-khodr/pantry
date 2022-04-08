@@ -20,9 +20,9 @@ class _AuthenticationState extends State<Authentication>
 
   @override
   void initState() {
+    super.initState();
     _tabController = TabController(vsync: this, initialIndex: 0, length: 2);
     checkAuth();
-    super.initState();
   }
 
   checkAuth() async {
