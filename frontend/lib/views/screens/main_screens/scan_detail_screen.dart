@@ -21,7 +21,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 class ScanDetailScreen extends StatefulWidget {
-  ScanDetailScreen({
+  const ScanDetailScreen({
     Key? key,
     required this.barcode,
     required this.name,
@@ -33,13 +33,14 @@ class ScanDetailScreen extends StatefulWidget {
   final String name;
   final String qty;
   final String image;
-  Nutriments? nutriments;
+  final Nutriments? nutriments;
 
   @override
   State<ScanDetailScreen> createState() => _ScanDetailScreenState();
 }
 
 class _ScanDetailScreenState extends State<ScanDetailScreen> {
+  String? _token;
   bool isLoading = false;
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _barcodeController = TextEditingController();
@@ -66,9 +67,18 @@ class _ScanDetailScreenState extends State<ScanDetailScreen> {
   @override
   void initState() {
     super.initState();
+    getToken();
     Provider.of<FoodViewModel>(context, listen: false).foodList;
     initializeData();
     _barcodeController.text = widget.barcode;
+  }
+
+  void getToken() async {
+    foodViewModel.getUserToken().then((value) {
+      setState(() {
+        value = _token!;
+      });
+    });
   }
 
   void initializeData() async {
@@ -465,7 +475,7 @@ class _ScanDetailScreenState extends State<ScanDetailScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             RoundedButton(
-              icon: Icons.check,
+              icon: Icon(Icons.check),
               text: "Add Item",
               width: size.width / 2,
               onPressed: () async {
