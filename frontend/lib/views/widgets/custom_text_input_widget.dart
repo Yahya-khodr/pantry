@@ -3,15 +3,17 @@ import 'package:frontend/resources/palette.dart';
 
 class CustomTextInput extends StatelessWidget {
   final TextEditingController controller;
-  final TextInputType keyboardType;
-  final String suffixText;
-  final String labelText;
+  final TextInputType? keyboardType;
+  final String? suffixText;
+  final String? labelText;
+  final TextAlign? textAlign;
   const CustomTextInput({
     Key? key,
     required this.controller,
-    required this.keyboardType,
-    required this.suffixText,
-    required this.labelText,
+    this.keyboardType,
+    this.suffixText,
+    this.labelText,
+    this.textAlign,
   }) : super(key: key);
 
   @override
@@ -31,6 +33,7 @@ class CustomTextInput extends StatelessWidget {
                 ThemeData().colorScheme.copyWith(primary: Palette.appBarColor),
           ),
           child: TextField(
+            textAlign: textAlign ?? TextAlign.start,
             keyboardType: keyboardType,
             controller: controller,
             decoration: InputDecoration(

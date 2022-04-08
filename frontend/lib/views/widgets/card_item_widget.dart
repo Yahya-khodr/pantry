@@ -100,12 +100,12 @@ class CardItem extends StatelessWidget {
                     buttonMinWidth: 20,
                     children: <Widget>[
                       CircleButtonIcon(
-                        onPressed: increase,
+                        onPressed: decrease,
                         icon: Icons.remove,
                       ),
                       Text(total.toString()),
                       CircleButtonIcon(
-                        onPressed: decrease,
+                        onPressed: increase,
                         icon: Icons.add,
                       ),
                     ],
@@ -132,7 +132,7 @@ class CircleButtonIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialButton(
-      onPressed: () {},
+      onPressed: onPressed,
       shape: const CircleBorder(
         side: BorderSide(color: Palette.appBarColor),
       ),

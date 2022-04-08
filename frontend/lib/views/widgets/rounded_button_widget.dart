@@ -6,7 +6,7 @@ class RoundedButton extends StatelessWidget {
   final VoidCallback onPressed;
   final Color color, textColor;
   final double? width;
-  final IconData? icon;
+  final Widget? icon;
 
   const RoundedButton({
     Key? key,
@@ -35,11 +35,7 @@ class RoundedButton extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(
-            icon,
-            color: Colors.white,
-            size: 24,
-          ),
+          icon ?? Container(),
           const SizedBox(width: 5.0),
           Text(
             text.toUpperCase(),

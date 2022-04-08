@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/resources/palette.dart';
 
-class CustomTile extends StatelessWidget {
+class CustomListTile extends StatelessWidget {
   final String title;
   final String name;
   final double? left;
 
-  const CustomTile({
+  const CustomListTile({
     Key? key,
     required this.title,
     this.left,
@@ -28,7 +28,7 @@ class CustomTile extends StatelessWidget {
             style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w400,
-                color: Palette.TextColor),
+                color: Palette.textColor),
           ),
           trailing: Padding(
             padding: EdgeInsets.only(

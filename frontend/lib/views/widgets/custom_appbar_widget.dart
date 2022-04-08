@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/resources/palette.dart';
+import 'package:frontend/utils/utilities.dart';
 import 'package:frontend/viewmodels/user_viewmodel.dart';
 import 'package:frontend/views/screens/auth_screens/auth_screen.dart';
 import 'package:provider/provider.dart';
@@ -9,12 +10,14 @@ class CustomAppBar extends StatelessWidget {
   final TabBar? bottom;
   final double? height;
   final Widget? iconButton;
+  final Widget? voiceButton;
   const CustomAppBar({
     Key? key,
     required this.title,
     this.bottom,
     this.height,
     this.iconButton,
+    this.voiceButton,
   }) : super(key: key);
 
   @override
@@ -25,6 +28,7 @@ class CustomAppBar extends StatelessWidget {
       title: Text(title),
       actions: [
         iconButton!,
+        voiceButton ?? Container(),
         PopupMenuButton(
           itemBuilder: (context) {
             return [
@@ -33,6 +37,7 @@ class CustomAppBar extends StatelessWidget {
                 child: const Text("Log out"),
                 onTap: () async {
                   await userViewModel.signOut();
+                  Utilities.clearSharedPreferences(context);
                   Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
