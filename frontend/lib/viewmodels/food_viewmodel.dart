@@ -1,4 +1,3 @@
-
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
@@ -21,9 +20,6 @@ class FoodViewModel with ChangeNotifier {
   List<Food> _foodListByCategory = [];
   List<Food> get foodListByCategory => _foodListByCategory;
 
-  FoodViewModel() {
-    getUserToken().then((token) => getFoods(token!));
-  }
 
   setLoading(bool loading) async {
     _isLoading = loading;
@@ -34,7 +30,7 @@ class FoodViewModel with ChangeNotifier {
     _foodList = foodList;
   }
 
-  setFoodListByCategory(List<Food> foodListByCategory , String category) {
+  setFoodListByCategory(List<Food> foodListByCategory, String category) {
     _foodListByCategory = foodListByCategory;
   }
 
@@ -73,19 +69,11 @@ class FoodViewModel with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<bool> addFood(
-    String token,
-    String barcode,
-    String name,
-    String qty,
-    String expDate,
-    String purDate,
-    String category,
-    File imageFile
-  ) async {
+  Future<bool> addFood(String token, String barcode, String name, String qty,
+      String expDate, String purDate, String category, File imageFile) async {
     setLoading(true);
     var response = await FoodService.addFood(
-        token, barcode, expDate, purDate, name, qty, category, imageFile );
+        token, barcode, expDate, purDate, name, qty, category, imageFile);
     if (response) {
       setLoading(false);
       return true;
