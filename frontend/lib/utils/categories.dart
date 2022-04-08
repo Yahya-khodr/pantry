@@ -39,3 +39,38 @@ List categoriesList = [
   "Dairy",
   "Others"
 ];
+
+List foodSlider = [
+  {
+    'name': 'burger',
+    'image': 'assets/images/burger.jpg',
+  },
+  {
+    'name': 'burrito',
+    'image': 'assets/images/burrito.jpg',
+  },
+  {
+    'name': 'pancakes',
+    'image': 'assets/images/pancakes.jpg',
+  },
+  {
+    'name': 'pasta',
+    'image': 'assets/images/pasta.jpg',
+  },
+  {
+    'name': 'pizza',
+    'image': 'assets/images/pizza.jpg',
+  },
+  {
+    'name': 'ramen',
+    'image': 'assets/images/ramen.jpg',
+  },
+  {
+    'name': 'salmon',
+    'image': 'assets/images/salmon.jpg',
+  },
+  {
+    'name': 'steak',
+    'image': 'assets/images/steak.jpg',
+  },
+];
