@@ -25,6 +25,7 @@ class _ShopScreenState extends State<ShopScreen> {
   late String _itemName;
   int _itemQty = 1;
   final TextEditingController _itemNameController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
   String? _token;
   List<ShopItem> _shopList = [];
   bool _isLoading = true;
@@ -42,9 +43,11 @@ class _ShopScreenState extends State<ShopScreen> {
   void getToken() async {
     await foodViewModel.getUserToken().then((token) {
       getShopItems(token!);
-      setState(() {
-        _token = token;
-      });
+      if (mounted) {
+        setState(() {
+          _token = token;
+        });
+      }
     });
   }
 
@@ -165,6 +168,12 @@ class _ShopScreenState extends State<ShopScreen> {
                 itemBuilder: (BuildContext context, int index) {
                   Map suggestions = suggestionsItems[index];
                   return SuggestedCard(
+                      onTap: () async {
+                        setState(() {
+                          _itemNameController.text = suggestions['name'];
+                        });
+                        addShopItem(context, _itemNameController);
+                      },
                       image: AssetImage(suggestions['image']),
                       name: suggestions['name']);
                 },
@@ -182,90 +191,7 @@ class _ShopScreenState extends State<ShopScreen> {
                       const Text("Add items to buy"),
                       CustomElevetadButton(
                         onPressed: () async {
-                          showModalBottomSheet(
-                            isScrollControlled: true,
-                            shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(20),
-                                  topRight: Radius.circular(20)),
-                            ),
-                            context: context,
-                            builder: (BuildContext context) {
-                              return StatefulBuilder(
-                                builder: (BuildContext context,
-                                    StateSetter setState) {
-                                  return SingleChildScrollView(
-                                    child: Container(
-                                      padding: EdgeInsets.only(
-                                          bottom: MediaQuery.of(context)
-                                              .viewInsets
-                                              .bottom),
-                                      child: Container(
-                                        padding: const EdgeInsets.all(30),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.stretch,
-                                          children: [
-                                            const Text(
-                                              "Add Item",
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(fontSize: 30),
-                                            ),
-                                            const SizedBox(height: 30),
-                                            CustomTextInput(
-                                                controller:
-                                                    _itemNameController),
-                                            const SizedBox(height: 2.5),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: <Widget>[
-                                                CircleButtonIcon(
-                                                  onPressed: () {
-                                                    setState(() {
-                                                      decrement();
-                                                    });
-                                                  },
-                                                  icon: Icons.remove,
-                                                ),
-                                                Text('$_itemQty'),
-                                                CircleButtonIcon(
-                                                  onPressed: () {
-                                                    setState(() {
-                                                      increment();
-                                                    });
-                                                  },
-                                                  icon: Icons.add,
-                                                ),
-                                              ],
-                                            ),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                CustomElevetadButton(
-                                                  onPressed: () {
-                                                    setState(() {
-                                                      _itemName =
-                                                          _itemNameController
-                                                              .text;
-                                                    });
-                                                    createItem();
-                                                  },
-                                                  icon: Icons.check,
-                                                  text: "Add Item",
-                                                ),
-                                              ],
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  );
-                                },
-                              );
-                            },
-                          );
+                          addShopItem(context, _nameController);
                         },
                         icon: Icons.add,
                         text: 'Add Item',
@@ -304,6 +230,85 @@ class _ShopScreenState extends State<ShopScreen> {
           ),
         ],
       ),
+    );
+  }
+
+  Future<dynamic> addShopItem(
+      BuildContext context, TextEditingController nameController) {
+    return showModalBottomSheet(
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+      ),
+      context: context,
+      builder: (BuildContext context) {
+        return StatefulBuilder(
+          builder: (BuildContext context, StateSetter setState) {
+            return SingleChildScrollView(
+              child: Container(
+                padding: EdgeInsets.only(
+                    bottom: MediaQuery.of(context).viewInsets.bottom),
+                child: Container(
+                  padding: const EdgeInsets.all(30),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      const Text(
+                        "Add Item",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontSize: 30),
+                      ),
+                      const SizedBox(height: 30),
+                      CustomTextInput(
+                          textAlign: TextAlign.center,
+                          controller: nameController),
+                      const SizedBox(height: 2.5),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          CircleButtonIcon(
+                            onPressed: () {
+                              setState(() {
+                                decrement();
+                              });
+                            },
+                            icon: Icons.remove,
+                          ),
+                          Text('$_itemQty'),
+                          CircleButtonIcon(
+                            onPressed: () {
+                              setState(() {
+                                increment();
+                              });
+                            },
+                            icon: Icons.add,
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          CustomElevetadButton(
+                            onPressed: () {
+                              setState(() {
+                                _itemName = nameController.text;
+                              });
+                              createItem();
+                            },
+                            icon: Icons.check,
+                            text: "Add Item",
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            );
+          },
+        );
+      },
     );
   }
 }
