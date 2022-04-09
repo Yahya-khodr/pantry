@@ -1,13 +1,12 @@
 
-from tkinter import image_names
+
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from shop.models import ShopItem
 from shop.serializer import ShopItemSerializer
 from users.models import UserModel
-from django.core.files.base import ContentFile
-import base64
+
 # Create your views here.
 
 
