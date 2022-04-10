@@ -87,16 +87,20 @@ class _ShopScreenState extends State<ShopScreen> {
 
   void createItem() async {
     await foodViewModel.getUserToken().then((token) async {
-      setState(() {
-        _isLoading = true;
-      });
+      if (mounted) {
+        setState(() {
+          _isLoading = true;
+        });
+      }
 
       var response = await ShopService.createItem(token!, _itemName, _itemQty)
           .then((value) {
-        setState(() {
-          _isLoading = false;
-          getShopItems(token);
-        });
+        if (mounted) {
+          setState(() {
+            _isLoading = false;
+            getShopItems(token);
+          });
+        }
         if (value) {
           Navigator.pop(context);
         } else {
