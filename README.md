@@ -28,10 +28,9 @@
 
 > This design was planned before on paper, then moved to Figma app for the fine details.
 
-| home  | detail  |
-| ----------------| -----|
-| <img src="screenshots/wireframes/items.png"> |  <img src="screenshots/wireframes/detail.png">|
+<img src="screenshots/wireframes/1.png" width="200"/> <img src="screenshots/wireframes/2.png" width="200"/> <img src="screenshots/wireframes/cover-image.png" width="200"/> 
 
+<img src="screenshots/wireframes/3.png" width="200"/> <img src="screenshots/wireframes/4.png" width="200"/> <img src="screenshots/wireframes/5.png" width="200"/> 
 
 
 <br><br>
@@ -67,7 +66,10 @@ Some plugins are not listed may be found in `frontend/pubspec.yaml`. & `server/r
 <img src="screenshots/svgs/title5.svg" id="impl"/>
 
 
- <img src="screenshots/images/items_page.jpg" width="200"/>    <img src="screenshots/images/detail_page.jpg" width="200">
+ <img src="screenshots/images/auth_page.gif" width="200"/> <img src="screenshots/images/home_page.gif" width="200"> <img src="screenshots/images/shop_page.gif" width="200"> <img src="screenshots/images/profile.gif" width="200">
+
+
+  <img src="screenshots/images/speech_search.gif" width="200"> <img src="screenshots/images/detail_scan.jpg" width="200"> <img src="screenshots/images/home.jpg" width="200"> <img src="screenshots/images/items.jpg" width="200"> 
 
 
 
