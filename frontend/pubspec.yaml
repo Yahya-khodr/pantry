@@ -49,6 +49,7 @@ dependencies:
   flutter_native_timezone: ^2.0.0
   speech_to_text: ^5.4.3
   avatar_glow: ^2.0.2
+  cached_network_image: ^3.2.0
 
 dev_dependencies:
   flutter_test:
