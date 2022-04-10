@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:frontend/resources/constants.dart';
 import 'package:frontend/resources/palette.dart';
@@ -38,6 +37,15 @@ class _AuthenticationState extends State<Authentication>
       appBar: AppBar(
         backgroundColor: Palette.appBarColor,
         toolbarHeight: MediaQuery.of(context).size.height / 5,
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Palette.appBarColor, Palette.appBarColorLinear],
+              end: Alignment.topCenter,
+              begin: Alignment.bottomCenter,
+            ),
+          ),
+        ),
         centerTitle: true,
         elevation: 0,
         title: Text(
