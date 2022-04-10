@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_typing_uninitialized_variables
 
 import 'dart:io';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/models/nutriment_model.dart';
 import 'package:frontend/models/product_model.dart';
@@ -157,6 +158,15 @@ class _ScanDetailScreenState extends State<ScanDetailScreen> {
                 ),
             icon: const Icon(Icons.arrow_back_ios)),
         title: const Text("Add Item"),
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Palette.appBarColor, Palette.appBarColorLinear],
+              end: Alignment.topCenter,
+              begin: Alignment.bottomCenter,
+            ),
+          ),
+        ),
       ),
       body: isLoading
           ? const Center(
@@ -191,8 +201,12 @@ class _ScanDetailScreenState extends State<ScanDetailScreen> {
                                               width: 100.0,
                                               height: 100.0,
                                             )
-                                          : Image.network(
-                                              widget.image,
+                                          : CachedNetworkImage(
+                                              placeholder: (context, url) =>
+                                                  const Center(
+                                                      child:
+                                                          CircularProgressIndicator()),
+                                              imageUrl: widget.image,
                                               width: 100,
                                               height: 100,
                                               fit: BoxFit.cover,
@@ -231,11 +245,19 @@ class _ScanDetailScreenState extends State<ScanDetailScreen> {
                                 height: size.height / 4.5 - 10,
                                 child: Column(
                                   children: [
-                                    TextField(
-                                      controller: _nameController,
-                                      decoration: const InputDecoration(
-                                        labelText: "Product Name",
-                                        hintText: 'product name',
+                                    Theme(
+                                      data: Theme.of(context).copyWith(
+                                        colorScheme: ThemeData()
+                                            .colorScheme
+                                            .copyWith(
+                                                primary: Palette.appBarColor),
+                                      ),
+                                      child: TextField(
+                                        controller: _nameController,
+                                        decoration: const InputDecoration(
+                                          labelText: "Product Name",
+                                          hintText: 'product name',
+                                        ),
                                       ),
                                     ),
                                     TextField(
@@ -357,7 +379,6 @@ class _ScanDetailScreenState extends State<ScanDetailScreen> {
                       ],
                     ),
                     ExpansionTile(
-                      initiallyExpanded: true,
                       textColor: Palette.appBarColor,
                       iconColor: Palette.appBarColor,
                       title: const Text(
