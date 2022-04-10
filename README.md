@@ -28,9 +28,9 @@
 
 > This design was planned before on paper, then moved to Figma app for the fine details.
 
-<img src="screenshots/wireframes/1.png" width="200"/> <img src="screenshots/wireframes/2.png" width="200"/> <img src="screenshots/wireframes/cover-image.png" width="200"/> 
+<img src="screenshots/wireframes/1.png" width="300"/> <img src="screenshots/wireframes/2.png" width="300"/> <img src="screenshots/wireframes/cover-image.png" width="300"/> 
 
-<img src="screenshots/wireframes/3.png" width="200"/> <img src="screenshots/wireframes/4.png" width="200"/> <img src="screenshots/wireframes/5.png" width="200"/> 
+<img src="screenshots/wireframes/3.png" width="300"/> <img src="screenshots/wireframes/4.png" width="300"/> <img src="screenshots/wireframes/5.png" width="300"/> 
 
 
 <br><br>
