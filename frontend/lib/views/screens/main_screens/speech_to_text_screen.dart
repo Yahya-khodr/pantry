@@ -34,6 +34,15 @@ class _SpeechScreenState extends State<SpeechScreen> {
             icon: const Icon(Icons.arrow_back_ios)),
         backgroundColor: Palette.appBarColor,
         title: const Text('Voice Search'),
+        flexibleSpace: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Palette.appBarColor, Palette.appBarColorLinear],
+            end: Alignment.topCenter,
+            begin: Alignment.bottomCenter,
+          ),
+        ),
+      ),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(30).copyWith(bottom: 150),

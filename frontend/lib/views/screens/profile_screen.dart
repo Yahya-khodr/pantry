@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/resources/constants.dart';
 import 'package:frontend/utils/utilities.dart';
@@ -84,14 +85,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   width: 120.0,
                                   height: 120.0,
                                 )
-                              : Image.network(
-                                  Constants.imageApi + _imageUrl!,
+                              : CachedNetworkImage(
+                                  placeholder: (context, url) => const Center(
+                                      child: CircularProgressIndicator()),
                                   width: 120.0,
                                   height: 120.0,
                                   fit: BoxFit.cover,
+                                  imageUrl: Constants.imageApi + _imageUrl!,
                                 ),
-                         
-                        
                           onClicked: () => Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -99,7 +100,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       UpdateProfilePicture(_imageUrl!))),
                           isEdit: true,
                         ),
-                      
                       ],
                     ),
                     const Divider(),
