@@ -146,7 +146,7 @@ def get_recend_foods(request):
         # user = UserModel.objects.get(id=request.user.id)
         today_date = datetime.now()
         last_food = Food.objects.filter(user=request.user.id).filter(
-            expiry_date__range=[today_date, '2023-01-01']).order_by(
+            expiry_date__gt=today_date).order_by(
             '-id')[:3]
         last_food_ascending = reversed(last_food)
         serializer = FoodSerializer(last_food_ascending, many=True)
