@@ -1,4 +1,3 @@
-import 'package:frontend/resources/constants.dart';
 
 class Food {
   int? id;
