@@ -70,6 +70,15 @@ class _SuggestedScreenState extends State<SuggestedScreen> {
       appBar: AppBar(
         title: const Text('Suggested Items'),
         backgroundColor: Palette.appBarColor,
+        flexibleSpace: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Palette.appBarColor, Palette.appBarColorLinear],
+            end: Alignment.topCenter,
+            begin: Alignment.bottomCenter,
+          ),
+        ),
+      ),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0),

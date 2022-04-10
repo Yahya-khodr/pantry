@@ -1,15 +1,16 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:frontend/models/food_model.dart';
 import 'package:frontend/resources/constants.dart';
 import 'package:frontend/resources/palette.dart';
 import 'package:frontend/viewmodels/food_viewmodel.dart';
-import 'package:frontend/views/screens/main_screens/scan_detail_screen.dart';
-import 'package:frontend/views/widgets/custom_button_widget.dart';
 import 'package:frontend/views/widgets/custom_listtile_widget.dart';
 import 'package:frontend/views/widgets/rounded_button_widget.dart';
 import 'package:provider/provider.dart';
 
 class FoodDetailScreen extends StatefulWidget {
-  const FoodDetailScreen({Key? key}) : super(key: key);
+  final Food food;
+  const FoodDetailScreen({Key? key, required this.food}) : super(key: key);
 
   @override
   State<FoodDetailScreen> createState() => _FoodDetailScreenState();
@@ -25,14 +26,22 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
   @override
   Widget build(BuildContext context) {
     FoodViewModel foodViewModel = context.watch<FoodViewModel>();
-    FoodViewModel productViewModel = context.watch<FoodViewModel>();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Palette.appBarColor,
-        title: Text(foodViewModel.selectedFood.name!),
+        title: Text(widget.food.name!),
         leading: IconButton(
             onPressed: () => Navigator.pop(context),
             icon: const Icon(Icons.arrow_back_ios)),
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Palette.appBarColor, Palette.appBarColorLinear],
+              end: Alignment.topCenter,
+              begin: Alignment.bottomCenter,
+            ),
+          ),
+        ),
       ),
       body: foodViewModel.loading
           ? const Center(
@@ -62,13 +71,13 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                                 ],
                               ),
                               child: Hero(
-                                tag: Constants.imageApi +
-                                    foodViewModel.selectedFood.imageUrl!,
+                                tag: Constants.imageApi + widget.food.imageUrl!,
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(30.0),
                                   child: Image(
-                                    image: NetworkImage(Constants.imageApi +
-                                        foodViewModel.selectedFood.imageUrl!),
+                                    image: CachedNetworkImageProvider(
+                                        Constants.imageApi +
+                                            widget.food.imageUrl!),
                                     fit: BoxFit.cover,
                                   ),
                                 ),
@@ -95,19 +104,16 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                       ),
                       Column(
                         children: <Widget>[
-                          CustomTile(
-                              title: 'Product Name :',
-                              name: foodViewModel.selectedFood.name!),
-                          CustomTile(
+                          CustomListTile(
+                              title: 'Product Name :', name: widget.food.name!),
+                          CustomListTile(
                               title: 'Expiry date :',
-                              name: foodViewModel.selectedFood.expiryDate
-                                  .toString()),
-                          CustomTile(
+                              name: widget.food.expiryDate.toString()),
+                          CustomListTile(
                               title: 'Purchased Date :',
-                              name: foodViewModel.selectedFood.purchasedDate!),
-                          CustomTile(
-                              title: 'Quantity :',
-                              name: foodViewModel.selectedFood.quantity!),
+                              name: widget.food.purchasedDate!),
+                          CustomListTile(
+                              title: 'Quantity :', name: widget.food.quantity!),
                         ],
                       ),
                       const SizedBox(
@@ -120,24 +126,14 @@ class _FoodDetailScreenState extends State<FoodDetailScreen> {
                           children: <Widget>[
                             RoundedButton(
                               width: 200,
-                              // onPressed: () => Navigator.of(context).push(
-                              //   MaterialPageRoute(
-                              //     builder: (BuildContext context) {
-                              //       return ScanDetailScreen(
-                              //         barcode:
-                              //             foodViewModel.selectedFood.barcode!,
-                              //         image:
-                              //             foodViewModel.selectedFood.imageUrl ??
-                              //                 "",
-                              //         qty: foodViewModel.selectedFood.quantity!,
-                              //         name: foodViewModel.selectedFood.name!,
-                                      
-                              //       );
-                              //     },
-                              //   ),
-                              // ),
-                              onPressed: (){},
-                              icon: Icons.edit,
+                              onPressed: () {
+                                // Navigator.push(
+                                //     context,
+                                //     MaterialPageRoute(
+                                //         builder: (context) =>
+                                //             EditFoodScreen(food: widget.food)));
+                              },
+                              icon: Icon(Icons.edit),
                               text: 'Edit Item',
                             ),
                           ],
