@@ -5,6 +5,7 @@ import 'package:frontend/resources/palette.dart';
 import 'package:frontend/services/food_service.dart';
 import 'package:frontend/utils/suggestions.dart';
 import 'package:frontend/viewmodels/food_viewmodel.dart';
+import 'package:frontend/views/screens/food_detail_screen.dart';
 import 'package:frontend/views/widgets/expired_card_widget.dart';
 import 'package:frontend/views/widgets/suggested_card_wdiget.dart';
 
@@ -60,6 +61,15 @@ class _ExpiredScreenState extends State<ExpiredScreen> {
       appBar: AppBar(
         title: const Text('Expired Items'),
         backgroundColor: Palette.appBarColor,
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Palette.appBarColor, Palette.appBarColorLinear],
+              end: Alignment.topCenter,
+              begin: Alignment.bottomCenter,
+            ),
+          ),
+        ),
       ),
       body: _isLoading
           ? const Center(
@@ -81,7 +91,13 @@ class _ExpiredScreenState extends State<ExpiredScreen> {
                   itemBuilder: (BuildContext context, int index) {
                     return ExpiredCard(
                       food: _expiredList[index],
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => FoodDetailScreen(
+                                    food: _expiredList[index])));
+                      },
                     );
                   },
                 ),
