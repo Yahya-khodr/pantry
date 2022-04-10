@@ -4,20 +4,17 @@ import 'package:frontend/models/food_model.dart';
 import 'package:frontend/resources/constants.dart';
 import 'package:frontend/resources/palette.dart';
 import 'package:frontend/services/food_service.dart';
-import 'package:frontend/services/notification_service.dart';
 import 'package:frontend/utils/categories.dart';
 import 'package:frontend/utils/utilities.dart';
 import 'package:frontend/viewmodels/food_viewmodel.dart';
 import 'package:frontend/views/screens/food_detail_screen.dart';
-import 'package:frontend/views/screens/main_screens/main_screen.dart';
 import 'package:frontend/views/screens/main_screens/speech_to_text_screen.dart';
 import 'package:frontend/views/widgets/card_item_widget.dart';
 import 'package:frontend/views/widgets/custom_appbar_widget.dart';
 import 'package:frontend/views/widgets/custom_button_widget.dart';
 import 'package:frontend/views/widgets/home_card_widget.dart';
 import 'package:provider/provider.dart';
-import 'package:timezone/timezone.dart' as tz;
-import 'package:timezone/data/latest.dart' as tz;
+
 
 class FoodsScreen extends StatefulWidget {
   const FoodsScreen({Key? key}) : super(key: key);
