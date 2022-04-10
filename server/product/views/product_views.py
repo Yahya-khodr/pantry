@@ -129,14 +129,12 @@ def add_food(request):
 @permission_classes([IsAuthenticated])
 def get_foods(request):
     try:
-        user = UserModel.objects.get(id=request.user.id)
         today_date = datetime.now()
-        items = Food.objects.filter(user=user).filter(
-            expiry_date__range=[today_date, '2023-01-01'])
+        items = Food.objects.filter(user=request.user).filter(
+            expiry_date__gt=today_date)
         serializer = FoodSerializer(items, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
-    # except:
-    #     return Response(status=status.HTTP_404_NOT_FOUND)
+
     except Exception as ex:
         raise ex
 
@@ -145,9 +143,9 @@ def get_foods(request):
 @permission_classes([IsAuthenticated])
 def get_recend_foods(request):
     try:
-        user = UserModel.objects.get(id=request.user.id)
+        # user = UserModel.objects.get(id=request.user.id)
         today_date = datetime.now()
-        last_food = Food.objects.filter(user=user).filter(
+        last_food = Food.objects.filter(user=request.user.id).filter(
             expiry_date__range=[today_date, '2023-01-01']).order_by(
             '-id')[:3]
         last_food_ascending = reversed(last_food)
@@ -161,9 +159,8 @@ def get_recend_foods(request):
 @permission_classes([IsAuthenticated])
 def get_expired_foods(request):
     try:
-        user = UserModel.objects.get(id=request.user.id)
         end_date = datetime.now()
-        expired_foods = Food.objects.filter(user=user).filter(
+        expired_foods = Food.objects.filter(user=request.user.id).filter(
             expiry_date__range=["2022-01-01", end_date])
         serializer = FoodSerializer(expired_foods, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
@@ -188,8 +185,7 @@ def remove_food(request, food_id):
         food = Food.objects.get(id=food_id)
         food.delete()
         return Response(status=status.HTTP_200_OK)
-    # except:
-    #     return Response(status=status.HTTP_404_NOT_FOUND)
+
     except Exception as ex:
         raise ex
 
