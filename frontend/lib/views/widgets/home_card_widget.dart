@@ -1,6 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/models/food_model.dart';
 import 'package:frontend/resources/constants.dart';
+import 'package:frontend/resources/palette.dart';
 import 'package:frontend/utils/utilities.dart';
 
 class HomeCard extends StatelessWidget {
@@ -21,25 +23,46 @@ class HomeCard extends StatelessWidget {
       elevation: 2.0,
       child: ListTile(
         onTap: ontap,
-        leading: CircleAvatar(
-          backgroundImage: NetworkImage(Constants.imageApi + food.imageUrl!),
+        leading: ClipRRect(
+          borderRadius: BorderRadius.circular(12),
+          child: CachedNetworkImage(
+            placeholder: (context, url) =>
+                const Center(child: CircularProgressIndicator()),
+            imageUrl: Constants.imageApi + food.imageUrl!,
+            height: 60,
+            width: 60,
+            fit: BoxFit.cover,
+          ),
         ),
         title: Text(food.name!),
         subtitle: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              "Expires in :" +
-                  Utilities.daysBetween(
-                          DateTime.now(), DateTime.parse(food.expiryDate!))
-                      .toString(),
-              overflow: TextOverflow.ellipsis,
-              maxLines: 2,
-            ),
-            Text(
-              "Quantity : " + food.quantity!,
-              overflow: TextOverflow.ellipsis,
-              maxLines: 2,
+            RichText(
+                text: TextSpan(
+                    text: 'Expires in: ',
+                    style:
+                        const TextStyle(fontSize: 12, color: Palette.textColor),
+                    children: <TextSpan>[
+                  TextSpan(
+                    text: Utilities.daysBetween(DateTime.now(),
+                                DateTime.parse(food.expiryDate!))
+                            .toString() +
+                        'd',
+                    style: const TextStyle(color: Palette.appBarColor),
+                  )
+                ])),
+            RichText(
+              text: TextSpan(
+                text: 'Quantity: ',
+                style: const TextStyle(fontSize: 12, color: Palette.textColor),
+                children: <TextSpan>[
+                  TextSpan(
+                    text: food.quantity!,
+                    style: const TextStyle(color: Palette.appBarColor),
+                  ),
+                ],
+              ),
             ),
           ],
         ),

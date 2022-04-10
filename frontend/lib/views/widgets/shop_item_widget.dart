@@ -5,12 +5,18 @@ import 'package:frontend/resources/palette.dart';
 class ShopItemCard extends StatelessWidget {
   final ShopItem shopItem;
   final VoidCallback onPressed;
-  const ShopItemCard({Key? key, required this.shopItem, required this.onPressed}) : super(key: key);
+  const ShopItemCard(
+      {Key? key, required this.shopItem, required this.onPressed})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Card(
       elevation: 5,
+      clipBehavior: Clip.antiAlias,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -19,7 +25,7 @@ class ShopItemCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(10.0),
                 child: Text(
                   shopItem.itemName!.toUpperCase(),
                   style: TextStyle(color: Palette.appBarColor),

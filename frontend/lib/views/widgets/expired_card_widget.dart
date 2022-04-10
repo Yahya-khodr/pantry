@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/models/food_model.dart';
 import 'package:frontend/resources/constants.dart';
@@ -23,14 +24,14 @@ class ExpiredCard extends StatelessWidget {
           children: [
             Expanded(
               flex: 2,
-              child: Stack(
-                children: [
-                  Ink.image(
-                    image: NetworkImage(Constants.imageApi + food.imageUrl!),
-                    fit: BoxFit.cover,
-                    height: 75,
-                  ),
-                ],
+              child: ClipRRect(
+                child: CachedNetworkImage(
+                  placeholder: (context, url) =>
+                      const Center(child: CircularProgressIndicator()),
+                  imageUrl: Constants.imageApi + food.imageUrl!,
+                  fit: BoxFit.cover,
+                  width: double.infinity,
+                ),
               ),
             ),
             Expanded(
@@ -42,8 +43,7 @@ class ExpiredCard extends StatelessWidget {
                     padding: const EdgeInsets.only(bottom: 8.0),
                     child: Text(
                       food.name!.toUpperCase(),
-                      style:
-                          const TextStyle(color: Palette.appBarColorLinear),
+                      style: const TextStyle(color: Palette.appBarColorLinear),
                     ),
                   ),
                 ],

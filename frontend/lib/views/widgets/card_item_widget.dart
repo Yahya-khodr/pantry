@@ -75,16 +75,18 @@ class CardItem extends StatelessWidget {
                       style: const TextStyle(fontSize: 12),
                     ),
                     RichText(
-                        text: TextSpan(
-                            text: 'Qty:',
-                            style: const TextStyle(
-                                fontSize: 12, color: Colors.black),
-                            children: <TextSpan>[
+                      text: TextSpan(
+                        text: 'Qty:',
+                        style:
+                            const TextStyle(fontSize: 12, color: Colors.black),
+                        children: <TextSpan>[
                           TextSpan(
                             text: qty,
                             style: const TextStyle(color: Palette.appBarColor),
-                          )
-                        ])),
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
               ),
