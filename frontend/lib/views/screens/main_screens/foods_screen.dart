@@ -1,17 +1,23 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/models/food_model.dart';
 import 'package:frontend/resources/constants.dart';
 import 'package:frontend/resources/palette.dart';
 import 'package:frontend/services/food_service.dart';
+import 'package:frontend/services/notification_service.dart';
 import 'package:frontend/utils/categories.dart';
 import 'package:frontend/utils/utilities.dart';
 import 'package:frontend/viewmodels/food_viewmodel.dart';
 import 'package:frontend/views/screens/food_detail_screen.dart';
+import 'package:frontend/views/screens/main_screens/main_screen.dart';
+import 'package:frontend/views/screens/main_screens/speech_to_text_screen.dart';
 import 'package:frontend/views/widgets/card_item_widget.dart';
 import 'package:frontend/views/widgets/custom_appbar_widget.dart';
 import 'package:frontend/views/widgets/custom_button_widget.dart';
 import 'package:frontend/views/widgets/home_card_widget.dart';
 import 'package:provider/provider.dart';
+import 'package:timezone/timezone.dart' as tz;
+import 'package:timezone/data/latest.dart' as tz;
 
 class FoodsScreen extends StatefulWidget {
   const FoodsScreen({Key? key}) : super(key: key);
@@ -25,15 +31,58 @@ class _FoodsScreenState extends State<FoodsScreen>
   String? _token;
   late TabController _tabController;
   FoodViewModel foodViewModel = FoodViewModel();
-
+  List<Food> _foodList = [];
   bool isGridView = true;
-
+  bool _isLoading = false;
   @override
   void initState() {
     super.initState();
+    getToken();
     _tabController = TabController(
         vsync: this, initialIndex: 0, length: categoriesList.length);
     _tabController.addListener(() {});
+  }
+
+  void getToken() async {
+    await foodViewModel.getUserToken().then((token) async {
+      await getFoods(token!);
+    });
+  }
+
+  Future<void> getFoods(String token) async {
+    if (mounted) {
+      setState(() {
+        _isLoading = true;
+      });
+    }
+    var response = await FoodService.getFoods(token);
+    if (response.isNotEmpty) {
+      if (mounted) {
+        setState(() {
+          _foodList = response;
+          _isLoading = false;
+        });
+      }
+    } else {
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
+  }
+
+  void increaseQuantity(Food food, int idx) async {
+    var response = await FoodService.increaseFoodQuantity(food.id!, _token!);
+    if (response.responseCode == 200) {
+      Utilities.showSnackbar(context, response.message, true);
+      setState(() {
+        foodViewModel.foodList[idx].total =
+            foodViewModel.foodList[idx].total! + 1;
+      });
+    } else {
+      Utilities.showSnackbar(context, response.message, false);
+    }
   }
 
   @override
@@ -67,15 +116,26 @@ class _FoodsScreenState extends State<FoodsScreen>
             ],
           ),
           iconButton: IconButton(
-            icon: isGridView
-                ? const Icon(Icons.grid_on)
-                : const Icon(Icons.grid_off_rounded),
-            onPressed: () {
-              setState(() {
-                isGridView = !isGridView;
-              });
-            },
+              onPressed: () {
+                Navigator.pushNamed(context, "/search_screen");
+              },
+              icon: const Icon(Icons.search)),
+          voiceButton: IconButton(
+            onPressed: () => Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const SpeechScreen())),
+            icon: const Icon(Icons.mic),
           ),
+
+          // iconButton: IconButton(
+          //   icon: isGridView
+          //       ? const Icon(Icons.grid_on)
+          //       : const Icon(Icons.grid_off_rounded),
+          //   onPressed: () {
+          //     setState(() {
+          //       isGridView = !isGridView;
+          //     });
+          //   },
+          // ),
         ),
       ),
       body: foodViewModel.loading
@@ -141,28 +201,26 @@ class _FoodsScreenState extends State<FoodsScreen>
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) =>
-                                              const FoodDetailScreen(),
+                                              FoodDetailScreen(
+                                            food: food,
+                                          ),
                                         ),
                                       );
                                     },
                                     total: food.total ?? 1,
-                                    image: NetworkImage(
-                                        Constants.imageApi + food.imageUrl!),
+                                    image: CachedNetworkImageProvider(
+                                      Constants.imageApi + food.imageUrl!,
+                                    ),
                                     name: food.name ?? "No name",
                                     qty: food.quantity ?? "No qty",
                                     purchased: food.purchasedDate.toString(),
                                     date: Utilities.daysBetween(DateTime.now(),
                                             DateTime.parse(food.expiryDate!))
                                         .toString(),
-                                    increase: () {
-                                      setState(() {
-                                        food.total = (food.total! + 1);
-                                      });
+                                    increase: () async {
+                                      increaseQuantity(food, index);
                                     },
-                                    decrease: () async {
-                                      await FoodService.decreaseFoodQuantity(
-                                          food.id!, _token!);
-                                    },
+                                    decrease: () async {},
                                   );
                                 },
                               );
@@ -177,19 +235,15 @@ class _FoodsScreenState extends State<FoodsScreen>
                               itemBuilder: (BuildContext context, int index) {
                                 Food food = foodViewModel.foodList[index];
                                 return HomeCard(
-                                  image: Constants.imageApi + food.imageUrl!,
-                                  title: food.name ?? "No name",
-                                  date: Utilities.daysBetween(DateTime.now(),
-                                          DateTime.parse(food.expiryDate!))
-                                      .toString(),
-                                  qty: food.quantity ?? "No qty",
+                                  food: food,
                                   ontap: () async {
                                     foodViewModel.setSelectedFood(food);
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) =>
-                                            const FoodDetailScreen(),
+                                        builder: (context) => FoodDetailScreen(
+                                          food: food,
+                                        ),
                                       ),
                                     );
                                   },
