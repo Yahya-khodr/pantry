@@ -1,9 +1,9 @@
 class Constants {
   static String appName = "PantryPal";
 
-  static String api = "http://192.168.8.202:8000/api/";
-  static String imageApi = "http://192.168.8.202:8000";
-  // static String api = "http://10.0.2.2:8000/api/";
+  static String api = "http://3.21.227.244:3000/api/";
+  static String imageApi = "http://3.21.227.244:3000";
+
 
   static String loginUrl = api + "login/";
   static String registerUrl = api + "register/";
